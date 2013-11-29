@@ -1,0 +1,12 @@
+connectivity with HV platform
+    get list of all my personal numbers
+    get list of all test account
+    get list of features enabled per account
+record twilio calls
+
+
+call connect stories
+find a biz and get a CC number for it from CC service
+call that number
+call that number from a different number
+call that number from a withheld number
