@@ -10,7 +10,7 @@ class CallConnectHandler:
         self.__hostname=hostname
         # get logger
         self.logger = logging.getLogger('twilio-ec2.CallConnectHandler')
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
         # create console handler with a higher log level
         ch = logging.StreamHandler()
         ch.setLevel(logging.INFO)

@@ -1,0 +1,12 @@
+[behave]
+format=plain
+#logging_clear_handlers=yes
+logging_filter=-suds
+log_capture=False
+stdout_capture=False
+#logging_level=INFO
+# there's a bug fixed in upcoming version 1.2.4
+# https://github.com/behave/behave/issues/177
+#logging_format='[%(asctime)s] [%(levelname)s]: %(message)s'
+logging_datefmt="%a %Y-%m-%d %H:%M:%S %z"
+outfiles=log.txt
