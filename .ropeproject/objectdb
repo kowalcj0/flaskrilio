@@ -1,48 +1,0 @@
-€}q(U/usr/lib/python2.7/urllib2.py}q(Uurlopencrope.base.oi.memorydb
-ScopeInfo
-q)q}q(UinstanceqUdefinedqU/usr/lib/python2.7/urllib2.pyURequestq‡†Unone…q	h	‡Uunknown…q
-UbuiltinUstr†qh	h	‡h
-u}q†bURequest.__init__h)q}q((hhU/usr/lib/python2.7/urllib2.pyh‡†hUunknown…qh	h	h	th
-(hhU/usr/lib/python2.7/urllib2.pyh‡†hhh	h	h	th
-u}q†bUbuild_openerh)q}q)hhU/usr/lib/python2.7/urllib2.pyUOpenerDirector‡†s}q†bURequest.add_headerh)q}qhhU/usr/lib/python2.7/urllib2.pyh‡†hh‡h
-s}q†buUY/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/base.py}q(UListResource.create_instanceh)q}qhhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyUCallsq‡†(UbuiltinqUdictqh	h	t†hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyUCallq‡†s}q†bUResource.requesth)q}q (hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†hh(hhh	h	tt(hUtupleq!hhUY/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/base.pyUResponseq"‡†h	ts}q#†bUmake_twilio_requesth)q$}q%hhh‡hhUY/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/base.pyh"‡†s}q&†bUmake_requesth)q'}q((hhh	h	h	h	h	h	h	h	h	thhUY/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/base.pyh"‡†s}q)†bUListResource.load_instanceh)q*}q+hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†h†hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†s}q,†bUListResource.geth)q-}q.hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†h	†h
-s}q/†bUResource.urih)q0}q1hhUY/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/base.pyUResource‡†…hs}q2†buU/usr/lib/python2.7/optparse.py}q3(UOptionParser.parse_argsh)q4}q5hhU/usr/lib/python2.7/optparse.pyUOptionParserq6‡†h	h	‡h
-s}q7†bUOptionParser.__init__h)q8}q9(hhU/usr/lib/python2.7/optparse.pyh6‡†h	h	h	h	h	h	h	h	h	h	th
-s}q:†bUOptionContainer.add_optionh)q;}q<((hhU/usr/lib/python2.7/optparse.pyh6‡†hhhhhth
-(hhU/usr/lib/python2.7/optparse.pyh6‡†hhhhth
-u}q=†buUtwilio_connector.pyq>}q?(U TwilioConnector.get_call_detailsh)q@}qAhhUtwilio_connector.pyUTwilioConnectorqB‡†hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡††h
-s}qC†bUTwilioConnector.__init__h)qD}qEhhh>hB‡†…h
-s}qF†bUTwilioConnector.make_a_callh)qG}qHhhUtwilio_connector.pyhB‡†hh‡hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†s}qI†bUTwilioConnector.print_configh)qJ}qKhhh>hB‡†…h
-s}qL†bU!TwilioConnector.connect_to_twilioh)qM}qNhhh>hB‡†…h
-s}qO†bUTwilioConnector.load_configh)qP}qQ(hhh>hB‡†h†h
-hhh>hB‡†h	†h
-u}qR†buU#/usr/lib/python2.7/json/__init__.py}qS(Uloadh)qT}qU(hh	h	h	h	h	h	h	h	th
-s}qV†bUdumpsh)qW}qX(((hhhhth	h	h	h	h	h	h	h	h	h	th((hhhhth	h	h	h	h	h	h	h	h	h	h	th
-u}qY†buUcall_connect_handler.pyqZ}q[(U"CallConnectHandler.get_redirect_toh)q\}q]hhUcall_connect_handler.pyq^UCallConnectHandlerq_‡†hh‡h
-s}q`†bUCallConnectHandler.get_new_uuidh)qa}qbhhUcall_connect_handler.pyh_‡†…h
-s}qc†bUCallConnectHandler.__init__h)qd}qehhhZh_‡†h†h
-s}qf†bUCallConnectHandler.__get_json__h)qg}qh(hhUcall_connect_handler.pyh_‡†hh‡h
-hhh^h_‡†h(hhhht‡h
-hhUcall_connect_handler.pyh_‡†h(hhhht‡h
-u}qi†buU"/usr/lib/python2.7/json/decoder.py}qjUJSONDecoder.raw_decodeh)qk}qlhhU"/usr/lib/python2.7/json/decoder.pyUJSONDecoder‡†hh	‡(hh!hhts}qm†bsUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.py}qnUCalls.createh)qo}qp((hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†hhhh	h	th
-(hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†hhhh	thhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†(hhUZ/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/calls.pyh‡†hhhh	h	th
-u}qq†bsUS/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/__init__.py}qrUTwilioRestClient.__init__h)qs}qt(hhUS/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/__init__.pyUTwilioRestClient‡†hhh	h	h	h	th
-s}qu†bsU"/usr/lib/python2.7/json/encoder.py}qvUJSONEncoder.encodeh)qw}qxhhU"/usr/lib/python2.7/json/encoder.pyUJSONEncoder‡†(hhhht†hs}qy†bsU&/usr/lib/python2.7/logging/__init__.py}qz(ULogger.infoh)q{}q|(hhU&/usr/lib/python2.7/logging/__init__.pyU
-RootLoggerq}‡†hh	h	th
-s}q~†bUHandler.setLevelh)q}q€hhU&/usr/lib/python2.7/logging/__init__.pyUStreamHandlerq‡†Uunknown…q‚†h
-s}qƒ†bUHandler.setFormatterh)q„}q…hhU&/usr/lib/python2.7/logging/__init__.pyh‡†hhU&/usr/lib/python2.7/logging/__init__.pyU	Formatterq†‡††h
-s}q‡†bUStreamHandler.__init__h)qˆ}q‰hhU&/usr/lib/python2.7/logging/__init__.pyh‡†h	†h
-s}qŠ†bUFormatter.__init__h)q‹}qŒhhU&/usr/lib/python2.7/logging/__init__.pyh†‡†hh‡h
-s}q†bUdebugqh)q}q(Unone…q‘h‘h‘‡Uunknown…q’UbuiltinUstr†q“h‘h‘‡h’u}q”†bULogger.debugh)q•}q–(hhU&/usr/lib/python2.7/logging/__init__.pyh}‡†hh	h	th
-s}q—†bU	getLoggerh)q˜}q™(h…hhU&/usr/lib/python2.7/logging/__init__.pyh}‡†h‚…hhU&/usr/lib/python2.7/logging/__init__.pyh}‡†u}qš†bULogger.setLevelh)q›}qœhhU&/usr/lib/python2.7/logging/__init__.pyh}‡†h‚†h
-s}q†bULogger.errorh)q}qŸ((hhU&/usr/lib/python2.7/logging/__init__.pyh}‡†hh	h	th
-(hhU&/usr/lib/python2.7/logging/__init__.pyh}‡†h‚h	h	th
-u}q †bULogger.addHandlerh)q¡}q¢hhU&/usr/lib/python2.7/logging/__init__.pyh}‡†hhU&/usr/lib/python2.7/logging/__init__.pyh‡††h
-s}q£†buUmake_call.pyq¤}q¥(UCaller.__init__h)q¦}q§hhh¤UCallerq¨‡†…h
-s}q©†bUCaller.load_configh)qª}q«hhh¤h¨‡†h†h
-s}q¬†bUCaller.print_configh)q­}q®hhh¤h¨‡†…h
-s}q¯†bUCaller.connect_to_twilioh)q°}q±hhh¤h¨‡†…h
-s}q²†buU"/usr/lib/python2.7/ConfigParser.py}q³(URawConfigParser.readh)q´}qµhhU"/usr/lib/python2.7/ConfigParser.pyURawConfigParserq¶‡†h†h
-s}q·†bURawConfigParser.geth)q¸}q¹hhU"/usr/lib/python2.7/ConfigParser.pyh¶‡†hh‡h
-s}qº†bURawConfigParser.__init__h)q»}q¼(hhU"/usr/lib/python2.7/ConfigParser.pyh¶‡†h	h	h‚th
-s}q½†buUY/home/jk/virtualenvs/twilio-ec2/lib/python2.7/site-packages/twilio/rest/resources/util.py}q¾Utransform_paramsh)q¿}qÀ(hhh	h	t…(hhh	h	ts}qÁ†bsu.
