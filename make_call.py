@@ -5,13 +5,19 @@ import ConfigParser
 import logging
 from sys import exit
 import os
-
+from urllib2 import urlopen
+from urllib2 import URLError
+from urllib2 import HTTPError
+from urllib2 import HTTPPasswordMgrWithDefaultRealm
+from urllib2 import HTTPBasicAuthHandler
+from urllib2 import HTTPDigestAuthHandler
 
 class Caller:
     """A simple class to make a call from a twilio number"""
 
     def __init__(self):
         self.cfg = {}
+        self.logger = logging.getLogger('twilio-ec2.CallConnectHandler')
 
     def load_config(self, twilio_config):
         with open(twilio_config, 'rb') as cfg:
@@ -33,17 +39,47 @@ class Caller:
             print e
 
 
-    def make_a_call(self, from_no, to_no):
+    def call_and_run_twiml(self, from_no, to_no, twiml_url):
         try:
             call = self.client.calls.create(to = to_no,
                                            from_= from_no,
-                                           url = "http://ec2-54-220-44-187.eu-west-1.compute.amazonaws.com/test.twiml"
-                                           #url = "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient"
-                                            )
-            print call.sid
+                                           url = twiml_url)
+            return call
         except twilio.TwilioRestException as e:
             print "Something went wrong when trying to establish a call..."
             print e
+
+    def get_call_stats(self, call_sid):
+        try:
+            return self.client.calls.get(call_sid)
+        except twilio.TwilioRestException as e:
+            print "Something went wrong when trying to fetch call stats..."
+            print e
+
+    def download_recording(self, recording_sid):
+        # Open the url
+        try:
+            url = "https://api.twilio.com/%s/Accounts/%s/Recordings/%s.mp3" % \
+                    (self.cfg['twilio_api_ver'],
+                    self.cfg['twilio_account_sid'],
+                    recording_sid)
+            mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+            mgr.add_password(None,
+                             url,
+                             self.cfg['account_sid'],
+                             self.cfg['auth_token'])
+            urllib2.build_opener(urllib2.HTTPBasicAuthHandler(mgr),
+                                urllib2.HTTPDigestAuthHandler(mgr))
+            f = urlopen(url)
+            logging.debug("downloading %s ..." % url)
+            # Open our local file for writing
+            with open(os.path.basename(url), "wb") as local_file:
+                local_file.write(f.read())
+        #handle errors
+        except HTTPError, e:
+            print "HTTP Error:", e.code, url
+        except URLError, e:
+            print "URL Error:", e.reason, url
 
     def print_config(self):
         for key,val in self.cfg.items():

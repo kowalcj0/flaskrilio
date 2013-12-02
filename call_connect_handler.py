@@ -10,30 +10,21 @@ class CallConnectHandler:
         self.__hostname=hostname
         # get logger
         self.logger = logging.getLogger('twilio-ec2.CallConnectHandler')
-        self.logger.setLevel(logging.DEBUG)
-        # create console handler with a higher log level
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.INFO)
-        # create formatter and add it to the handlers
-        formatter=logging.Formatter('[%(asctime)s] [%(levelname)s]: %(message)s', "%a %Y-%m-%d %H:%M:%S %z")
-        ch.setFormatter(formatter)
-        self.logger.addHandler(ch)
 
+    def get_new_caller_id(self):
+        caller_id =  self.__get_json__("/api/id", "{}")["id"]
+        #self.logger.debug("Got new Caller ID: %s" % caller_id)
+        return caller_id
 
-    def get_new_uuid(self):
-        uuid =  self.__get_json__("/api/id", "{}")["id"]
-        self.logger.debug("Got new UUID: %s" % uuid)
-        return uuid
-
-    def get_redirect_to(self, uuid, number):
+    def get_redirect_to(self, caller_id, number):
         payload = {
-                    "id": uuid,
+                    "id": caller_id,
                     "redirectTo": number
                 }
         # use json.dumps to convert payload tupple into a string
         redir = self.__get_json__("/api/callers",
                                   json.dumps(payload))
-        self.logger.debug("Got new redirect_to:\n%s" % redir)
+        #self.logger.debug("Got new redirect_to:%s" % redir)
         return redir
 
     def __get_json__(self, endpoint, data):
@@ -50,9 +41,9 @@ class CallConnectHandler:
 
 
 if '__main__' == __name__:
-    cc = CallConnectHandler("http://callconnect.poc.hibulabs.co.uk")
-    id = cc.get_new_uuid()
-    redir = cc.get_redirect_to(id, "+447402028595")
-    print id
-    print redir
+    _cc = CallConnectHandler("http://callconnect.poc.hibulabs.co.uk")
+    _id = _cc.get_new_caller_id()
+    _redir = _cc.get_redirect_to(_id, "+447402028595")
+    print _id
+    print _redir
 
