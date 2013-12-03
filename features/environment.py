@@ -1,22 +1,46 @@
 # -*- coding: utf-8 -*-
 from behave import *
 import logging
+import os
+import sys
+
+# Set Path
+pwd = os.path.abspath(os.path.dirname(__file__))
+project = os.path.basename(pwd)
+new_path = pwd.strip(project)
+activate_this = os.path.join(new_path, 'flaskr')
+sys.path.append(activate_this)
+
+from flaskr import app
 
 ##############################################################################
 #
 # Preconfigure the evnironment using any of these steps :)
 #
+
+
 def before_step(context, step):
-    logging.debug("These run before every step.")
+    pass
+    #logging.debug("These run before every step.\n")
+
 
 def before_scenario(context, scenario):
-    logging.debug("These run before each scenario is run.")
+    pass
+    #logging.debug("These run before each scenario is run.\n")
+
 
 def before_feature(context, feature):
     logging.debug("These run before each feature file is exercised.")
+    app.config['TESTING'] = True
+    context.client = app.test_client()
+
 
 def before_tag(context, tag):
-    logging.debug("These run before a section tagged with the given name. They are invoked for each tag encountered in the order they’re found in the feature file. See controlling things with tags.")
+    pass
+    #logging.debug("These run before a section tagged with the given name. \
+        #They are invoked for each tag encountered in the order they’re found \
+        #in the feature file. See controlling things with tags.")
+
 
 def before_all(context):
     # get logger
@@ -29,7 +53,8 @@ def before_all(context):
     ch.setLevel(logging.INFO)
     fh.setLevel(logging.DEBUG)
     # create formatter and add it to the handlers
-    formatter=logging.Formatter('[%(asctime)s] [%(levelname)s]: %(message)s', "%a %Y-%m-%d %H:%M:%S %z")
+    formatter = logging.Formatter('[%(asctime)s] [%(levelname)s]: %(message)s',
+                                  "%a %Y-%m-%d %H:%M:%S %z")
     ch.setFormatter(formatter)
     fh.setFormatter(formatter)
     context.logger.addHandler(ch)
@@ -37,24 +62,35 @@ def before_all(context):
     #if not context.config.log_capture:
     #logging.basicConfig(level=logging.DEBUG)
 
+
 def after_step(context, step):
-    logging.debug("These run after every step.")
+    pass
+    #logging.debug("These run after every step.")
+
 
 def after_scenario(context, scenario):
-    logging.debug("These run after each scenario is run.")
+    pass
+    #logging.debug("These run after each scenario is run.")
+
 
 def after_feature(context, feature):
-    logging.debug("These run after each feature file is exercised.")
+    pass
+    #logging.debug("These run after each feature file is exercised.")
+
 
 def after_tag(context, tag):
-    logging.debug("These run after a section tagged with the given name. They are invoked for each tag encountered in the order they’re found in the feature file. See controlling things with tags.")
+    pass
+    #logging.debug("These run after a section tagged with the given name. \
+                   #They are invoked for each tag encountered in the order \
+                   #they’re found in the feature file. See controlling things \
+                   #with tags.")
+
 
 def after_all(context):
-    logging.debug("Executed after all features")
+    pass
+    #logging.debug("Executed after all features")
+
+
 #
 #
 ##############################################################################
-
-
-
-

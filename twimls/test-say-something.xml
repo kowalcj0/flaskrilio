@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Say>Hi. I called you using call connect service.</Say>
+    <Pause length="4"></Pause>
+    <Say>Here's my message for you</Say>
+    <Say>Earth is my mother ship</Say>
+    <Pause length="3"></Pause>
+    <Hangup/>
+</Response>

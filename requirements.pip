@@ -1,2 +1,4 @@
-behave
-twilio
+Flask==0.10.1
+behave==1.2.3
+httplib2==0.8
+twilio==3.6.4

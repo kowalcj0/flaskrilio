@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Say>Hi. You called me via Call Connect. Please leave a message</Say>
+    <Record timeout="10"/>
+    <!-- <Record timeout="10" transcribe="true" /> -->
+    <Hangup/>
+</Response>

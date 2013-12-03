@@ -2,5 +2,6 @@ tags
 tmp
 *.pyc
 .ropeproject/
-
+*.log
+*.output
 *.cfg
