@@ -6,7 +6,7 @@ from flask import request
 #from flask import url_for
 from flask import send_from_directory
 #from flask import abort
-#from flask import render_template
+from flask import render_template
 #from flask import flash
 
 # Flask app Configuration
@@ -15,33 +15,53 @@ app.config.from_object(__name__)
 app.debug = True
 
 
-@app.route('/')
-def show_entries():
-    #return render_template('show_entries.html', entries=entries)
-    return "Welcome"
+
+def get_twiml(twiml):
+    """Will safely check if requested twiml file exists!"""
+    try:
+        with open("twimls/%s" % twiml):
+            print "responding with %s" % twiml
+            return send_from_directory('twimls', filename=twiml)
+    except IOError:
+        return render_template('404.xml'), 404
 
 
-@app.route('/callback', methods=['POST'])
-def twilio_callback():
-    #return redirect(url_for('show_entries'))
+def print_request_details(request):
     if request.method == 'POST':
-        print "Req.: %s" % request.data
-        return "Req.: %s" % request.data
-
-
-@app.route('/callback/<twiml>', methods=['POST', 'GET'])
-def return_callback_twilml(twiml):
-    if request.method == 'POST':
-        print "POST CallSid: %s" % request.args.get("CallSid")
         print "All POST Req. data: %s" % request.data
         print "All POST params: %s" % request.args
         print "All POST Hdrs.: \n\n%s\n\n" % request.headers
-        return send_from_directory('twimls', filename=twiml)
     if request.method == 'GET':
         print "GET CallSid: %s" % request.args.get("CallSid")
         print "All GET params: %s" % request.args
         print "All GET Hdrs.: \n\n%s\n\n" % request.headers
-        return send_from_directory('twimls', filename=twiml)
+
+
+@app.route('/', methods=['POST', 'GET'])
+def show_entries():
+    return ("Welcome to Flaskrilio! A simple http server for handling Twilio "
+            "requests")
+
+
+@app.route('/vru', methods=['POST', 'GET'])
+@app.route('/vfu', methods=['POST', 'GET'])
+@app.route('/scu', methods=['POST', 'GET'])
+@app.route('/mru', methods=['POST', 'GET'])
+def respond_with_default_twiml():
+    """Will respond with a default twiml message"""
+    print_request_details(request)
+    ctx = str(request.url_rule).replace("/", "")
+    return get_twiml("%s-default.xml" % ctx)
+
+
+@app.route('/vru/<twiml>', methods=['POST', 'GET'])
+@app.route('/vfu/<twiml>', methods=['POST', 'GET'])
+@app.route('/scu/<twiml>', methods=['POST', 'GET'])
+@app.route('/mru/<twiml>', methods=['POST', 'GET'])
+def respond_with_twiml(twiml):
+    """Will respond with a specified twiml file"""
+    print_request_details(request)
+    return get_twiml(twiml)
 
 
 if __name__ == '__main__':
