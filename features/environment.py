@@ -11,7 +11,7 @@ new_path = pwd.strip(project)
 activate_this = os.path.join(new_path, 'flaskr')
 sys.path.append(activate_this)
 
-from flaskr import app
+from flaskrilio import app
 
 ##############################################################################
 #

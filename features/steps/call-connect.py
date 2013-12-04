@@ -25,16 +25,6 @@ def step_impl(context):
     assert context.caller_id is not None
 
 
-@when("I send this Caller ID to the callback endpoint")
-def step_impl(context):
-    try:
-        context.page = context.client.post('/callback',
-                                           data=context.caller_id,
-                                           follow_redirects=True)
-    except IOError as e:
-        print e
-
-
 @then("I should see Caller ID in the response")
 def step_impl(context):
     logging.debug("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA %s" % context.page.data)
