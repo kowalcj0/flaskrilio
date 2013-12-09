@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from flask import Flask
+#from FlaskMod import FlaskMod
 from flask import request
 #from flask import session
 #from flask import g
@@ -12,6 +13,7 @@ from flask import render_template
 #from flask import flash
 
 # Flask app Configuration
+#app = FlaskMod(__name__)
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.debug = True
@@ -51,7 +53,7 @@ def show_entries():
             "requests")
 
 
-@app.route('/shutdown', methods=['POST'])
+@app.route('/shutdown', methods=['POST', 'GET'])
 def shutdown():
     shutdown_server()
     return 'Server shutting down...'

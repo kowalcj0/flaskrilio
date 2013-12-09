@@ -87,19 +87,19 @@ def step_impl(context, inbound_twilio_number):
         number=context.redirect_to_no)
     logging.debug("redirect_to response for number: %s \n%s"
                   % (context.redirect_to_no, context.redir_resp))
+    context.caller = Caller()
+    context.caller.load_config(twilio_config="call-connect-eu.cfg")
+    context.caller.connect_to_twilio()
+    context.caller.print_config()
 
 
 @when('I call this number to call from "{outbound_twilio_number}"')
 def step_impl(context, outbound_twilio_number):
     context.from_no = outbound_twilio_number
-    context.caller = Caller()
-    context.caller.load_config(twilio_config="call-connect-eu.cfg")
-    context.caller.connect_to_twilio()
-    context.caller.print_config()
     context.call = context.caller.call_and_run_twiml(
         from_no=context.from_no,
         to_no=context.redirect_to_no,
-        twiml_url="https://dl.dropboxusercontent.com/u/14336410/twilio/test-say-something.xml")
+        twiml_url="https://dl.dropboxusercontent.com/u/14336410/twilio/test-load.xml")
 
 
 @when('I wait "{N}" seconds for the call to finish')

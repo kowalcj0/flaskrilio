@@ -22,11 +22,39 @@ Feature: Count call redirects
     Scenario Outline: Call retrieved number to call
         Given I retrieved a number to call for "<inbound_twilio_number>"
         When I call this number to call from "<outbound_twilio_number>"
-        And I wait "15" seconds for the call to finish
-        Then I should be redirected to "<inbound_twilio_number>"
-        And I should be able to download the call recording
+        #And I wait "0.3" seconds for the call to finish
+        #Then I should be redirected to "<inbound_twilio_number>"
+        #And I should be able to download the call recording
 
     Examples: real twilio numbers
         | inbound_twilio_number | outbound_twilio_number    |
         | +442033224597         | +441353210177             |
-
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
+        | +442033224597         | +441353210177             |
