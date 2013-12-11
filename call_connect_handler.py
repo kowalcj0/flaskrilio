@@ -7,15 +7,15 @@ from json_handler import JsonHandler
 class CallConnectHandler:
     """A simple wrapper for Call Connect endpoints"""
 
-    def __init__(self, hostname):
-        self.__hostname=hostname
-        self.jh = JsonHandler(self.__hostname)
-        # get logger
-        self.logger = logging.getLogger('twilio-ec2.CallConnectHandler')
+    def __init__(self, hostname=None, logger=None):
+        self.__hostname = hostname if hostname is not None else "http://127.0.0.0:5000"
+        self.__log = logger if logger is not None else logging.getLogger('CallConnectHandler')
+        self.__jh = JsonHandler(self.__hostname)
+        self.__log.debug("Flaskrilio handler initialized for: %s" % self.__hostname)
 
     def get_new_caller_id(self):
-        caller_id =  self.jh.post(endpoint="/api/id", data="{}")["id"]
-        #self.logger.debug("Got new Caller ID: %s" % caller_id)
+        caller_id =  self.__jh.post(endpoint="/api/id", data="{}")["id"]
+        self.__log.debug("Got new Caller ID: %s" % caller_id)
         return caller_id
 
     def get_redirect_to(self, caller_id, number):
@@ -24,9 +24,9 @@ class CallConnectHandler:
                     "redirectTo": number
                 }
         # use json.dumps to convert payload tupple into a string
-        redir = self.jh.post(endpoint="/api/callers",
-                             data=json.dumps(payload))
-        #self.logger.debug("Got new redirect_to:%s" % redir)
+        redir = self.__jh.post(endpoint="/api/callers",
+                               data=json.dumps(payload))
+        self.__log.debug("Got new redirect_to:%s" % redir)
         return redir
 
 

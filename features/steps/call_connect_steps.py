@@ -17,7 +17,7 @@ def step_impl(context):
 @when('I ask for a new Caller ID')
 def step_impl(context):
     context.caller_id = context.cch.get_new_caller_id()
-    logging.debug("Received new Caller ID: %s" % context.caller_id)
+    context.log.debug("Received new Caller ID: %s" % context.caller_id)
 
 
 @then('I should retrieve a Caller ID')
@@ -27,7 +27,7 @@ def step_impl(context):
 
 @then("I should see Caller ID in the response")
 def step_impl(context):
-    logging.debug("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA %s" % context.page.data)
+    context.log.debug("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA %s" % context.page.data)
     assert context.caller_id in context.page.data, \
         "Page data: %s" % context.page.data
 
@@ -44,8 +44,8 @@ def step_impl(context, redirect_to_no):
     context.redir_resp = context.cch.get_redirect_to(
         caller_id=context.caller_id,
         number=context.redirect_to_no)
-    logging.debug("redirect_to response for number: %s \n%s"
-                  % (context.redirect_to_no, context.redir_resp))
+    context.log.debug("redirect_to response for number: %s \n%s"
+                     % (context.redirect_to_no, context.redir_resp))
 
 
 @then('I should retrieve a new number to call')
@@ -85,8 +85,8 @@ def step_impl(context, inbound_twilio_number):
     context.redir_resp = context.cch.get_redirect_to(
         caller_id=context.caller_id,
         number=context.redirect_to_no)
-    logging.debug("redirect_to response for number: %s \n%s"
-                  % (context.redirect_to_no, context.redir_resp))
+    context.log.debug("redirect_to response for number: %s \n%s"
+                      % (context.redirect_to_no, context.redir_resp))
     context.caller = Caller()
     context.caller.load_config(twilio_config="call-connect-eu.cfg")
     context.caller.connect_to_twilio()
@@ -104,7 +104,7 @@ def step_impl(context, outbound_twilio_number):
 
 @when('I wait "{N}" seconds for the call to finish')
 def step_impl(context, N):
-    logging.debug("Waiting %s seconds for call to finish..." % N)
+    context.log.debug("Waiting %s seconds for call to finish..." % N)
     sleep(float(N))
 
 
@@ -112,7 +112,7 @@ def step_impl(context, N):
 def step_impl(context, inbound_twilio_number):
     call_stats = context.caller.get_call_stats(context.call.sid)
     context.call_stats = call_stats
-    logging.debug("Retrieved call stats: %s" % call_stats)
+    context.log.debug("Retrieved call stats: %s" % call_stats)
     assert call_stats.status == "completed"
     assert call_stats.duration >= 10
     assert call_stats.from_formatted == context.from_no, \
@@ -125,9 +125,9 @@ def step_impl(context, inbound_twilio_number):
 
 @then("I should be able to download the call recording")
 def step_impl(context):
-    logging.debug("List of available call recordings for call_sid: %s : %s"
-                  % (context.call.sid,
-                     context.call.recordings.list(call=context.call.sid)))
+    context.log.debug("List of available call recordings for call_sid: %s : %s"
+                     % (context.call.sid,
+                        context.call.recordings.list(call=context.call.sid)))
     """TO-DO
     recordings can be downloaded only for incoming calls.
     here we're handling outgoing call. We'd have to have a HTTP server (maybe)

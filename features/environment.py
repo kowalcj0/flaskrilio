@@ -3,6 +3,14 @@ from behave import *
 import logging
 import os
 import sys
+from multiprocessing import Process
+import tempfile
+import sqlite3
+from flaskrilio_handler import FlaskrilioHandler
+from call_connect_handler import CallConnectHandler
+from twilio_handler import TwilioHandler
+
+
 
 # Set Path
 pwd = os.path.abspath(os.path.dirname(__file__))
@@ -11,14 +19,12 @@ new_path = pwd.strip(project)
 activate_this = os.path.join(new_path, 'flaskr')
 sys.path.append(activate_this)
 
-from flaskrilio import app
+from flaskrilio import app, connect_db
 
 ##############################################################################
 #
 # Preconfigure the evnironment using any of these steps :)
 #
-
-
 def before_step(context, step):
     pass
     #logging.debug("These run before every step.\n")
@@ -30,9 +36,7 @@ def before_scenario(context, scenario):
 
 
 def before_feature(context, feature):
-    logging.debug("These run before each feature file is exercised.")
-    app.config['TESTING'] = True
-    context.client = app.test_client()
+    pass
 
 
 def before_tag(context, tag):
@@ -43,12 +47,14 @@ def before_tag(context, tag):
 
 
 def before_all(context):
+    """
+    """
     # get logger
-    context.logger = logging.getLogger('twilio-ec2.CallConnectHandler')
+    context.log = logging.getLogger('twilio-ec2.Behave')
     # create file handler which logs even debug messages
     fh = logging.FileHandler('behave.log')
     # create console handler with a higher log level
-    context.logger.setLevel(logging.DEBUG)
+    context.log.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
     fh.setLevel(logging.DEBUG)
@@ -57,10 +63,17 @@ def before_all(context):
                                   "%a %Y-%m-%d %H:%M:%S %z")
     ch.setFormatter(formatter)
     fh.setFormatter(formatter)
-    context.logger.addHandler(ch)
-    context.logger.addHandler(fh)
+    context.log.addHandler(ch)
+    context.log.addHandler(fh)
     #if not context.config.log_capture:
     #logging.basicConfig(level=logging.DEBUG)
+
+    # get a connection to local sqlite3 twilio.db managed by flaskrilio script
+    context.db = connect_db()
+    # get a Flaskrilio Handler used to make HTTP requests to this service
+    context.fh = FlaskrilioHandler(hostname="http://127.0.0.1:5000", logger=context.log)
+    context.cc = CallConnectHandler(hostname="http://callconnect.poc.hibulabs.co.uk", logger=context.log)
+    context.th = TwilioHandler(logger=context.log)
 
 
 def after_step(context, step):
@@ -87,8 +100,9 @@ def after_tag(context, tag):
 
 
 def after_all(context):
-    pass
-    #logging.debug("Executed after all features")
+    # close db connection
+    context.db.close()
+    context.log.debug("Executed after all features")
 
 
 #

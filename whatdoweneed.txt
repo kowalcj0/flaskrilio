@@ -1,4 +1,7 @@
-connectivity with HV platform
+connectivity  Flaskrilio service
+        When I connect to Flaskrilio db
+                Then I should have access to call records
+                with HV platform
     get list of all my personal numbers
     get list of all test account
     get list of features enabled per account
