@@ -6,9 +6,9 @@ import sys
 from multiprocessing import Process
 import tempfile
 import sqlite3
-from flaskrilio_handler import FlaskrilioHandler
-from call_connect_handler import CallConnectHandler
-from twilio_handler import TwilioHandler
+from handlers.flaskrilio_handler import FlaskrilioHandler
+from handlers.call_connect_handler import CallConnectHandler
+from handlers.twilio_handler import TwilioHandler
 
 
 
@@ -59,7 +59,7 @@ def before_all(context):
     ch.setLevel(logging.INFO)
     fh.setLevel(logging.DEBUG)
     # create formatter and add it to the handlers
-    formatter = logging.Formatter('[%(asctime)s] [%(levelname)s]: %(message)s',
+    formatter = logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s]: %(message)s',
                                   "%a %Y-%m-%d %H:%M:%S %z")
     ch.setFormatter(formatter)
     fh.setFormatter(formatter)
@@ -72,7 +72,7 @@ def before_all(context):
     context.db = connect_db()
     # get a Flaskrilio Handler used to make HTTP requests to this service
     context.fh = FlaskrilioHandler(hostname="http://127.0.0.1:5000", logger=context.log)
-    context.cc = CallConnectHandler(hostname="http://callconnect.poc.hibulabs.co.uk", logger=context.log)
+    context.cch = CallConnectHandler(hostname="http://callconnect.poc.hibulabs.co.uk", logger=context.log)
     context.th = TwilioHandler(logger=context.log)
 
 

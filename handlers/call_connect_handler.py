@@ -2,20 +2,22 @@
 import json
 import urllib2
 import logging
-from json_handler import JsonHandler
+from handlers.json_handler import JsonHandler
+from handlers.http_handler import HttpHandler
+from helpers import setup_console_logger
 
 class CallConnectHandler:
     """A simple wrapper for Call Connect endpoints"""
 
     def __init__(self, hostname=None, logger=None):
         self.__hostname = hostname if hostname is not None else "http://127.0.0.0:5000"
-        self.__log = logger if logger is not None else logging.getLogger('CallConnectHandler')
+        self.__log = setup_console_logger(logger, "CallConnectHandler")
         self.__jh = JsonHandler(self.__hostname)
         self.__log.debug("Flaskrilio handler initialized for: %s" % self.__hostname)
 
     def get_new_caller_id(self):
         caller_id =  self.__jh.post(endpoint="/api/id", data="{}")["id"]
-        self.__log.debug("Got new Caller ID: %s" % caller_id)
+        self.__log.debug("Received new Caller ID: %s" % caller_id)
         return caller_id
 
     def get_redirect_to(self, caller_id, number):
@@ -28,6 +30,10 @@ class CallConnectHandler:
                                data=json.dumps(payload))
         self.__log.debug("Got new redirect_to:%s" % redir)
         return redir
+
+    def delete_caller_id(self):
+        pass
+
 
 
 if '__main__' == __name__:

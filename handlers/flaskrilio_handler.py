@@ -2,8 +2,9 @@
 import json
 import urllib2
 import logging
-from json_handler import JsonHandler
-from http_handler import HttpHandler
+from handlers.json_handler import JsonHandler
+from handlers.http_handler import HttpHandler
+from helpers import setup_console_logger
 
 
 class FlaskrilioHandler:
@@ -12,7 +13,7 @@ class FlaskrilioHandler:
 
     def __init__(self, hostname=None, logger=None):
         self.__hostname = hostname if hostname is not None else "http://127.0.0.0:5000"
-        self.__log = logger if logger is not None else logging.getLogger('FlaskrilioHandler')
+        self.__log = setup_console_logger(logger, "CallConnectHandler")
         self.__jh = JsonHandler(self.__hostname)
         self.__hh = HttpHandler(self.__hostname)
         self.__log.debug("Flaskrilio handler initialized for: %s" % self.__hostname)

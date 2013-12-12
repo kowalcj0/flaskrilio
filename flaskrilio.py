@@ -14,6 +14,8 @@ from flask import flash
 from flask import jsonify
 from contextlib import closing
 import sqlite3
+import logging
+
 
 # Flask app Configuration
 DATABASE = 'twilio.db'
@@ -21,6 +23,24 @@ DEBUG = True
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+# get logger
+log = logging.getLogger('Flaskrilio')
+# create file handler which logs even debug messages
+fh = logging.FileHandler('flaskrilio.log')
+# create console handler with a higher log level
+log.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+fh.setLevel(logging.DEBUG)
+# create formatter and add it to the handlers
+formatter = logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s]: %(message)s',
+                                "%a %Y-%m-%d %H:%M:%S %z")
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+log.addHandler(ch)
+log.addHandler(fh)
+
 
 
 def connect_db():
@@ -45,25 +65,25 @@ def get_twiml(twiml):
     """Will safely check if requested twiml file exists!"""
     try:
         with open("twimls/%s" % twiml):
-            print "responding with %s" % twiml
+            log.debug("responding with %s" % twiml)
             return send_from_directory('twimls', filename=twiml)
     except IOError:
         return render_template('404.xml'), 404
 
 
 def print_request_details(request):
-    print "All REQ Cookies: %s" % request.cookies
+    log.debug("All REQ Cookies: %s" % request.cookies)
     if request.method in ['POST', 'PUT']:
-        print "All POST Values: %s" % request.values
-        print "All POST Form: %s" % request.form
-        print "All POST Req. data: %s" % request.data
-        print "All POST params: %s" % request.args
-        print "All POST Hdrs.: \n%s\n" % request.headers
+        log.debug("All POST Values: %s" % request.values)
+        log.debug("All POST Form: %s" % request.form)
+        log.debug("All POST Req. data: %s" % request.data)
+        log.debug("All POST params: %s" % request.args)
+        log.debug("All POST Hdrs.: \n%s\n" % request.headers)
     if request.method == 'GET':
-        print "GET CallSid: %s" % request.args.get("CallSid")
-        print "All GET Values: %s" % request.values
-        print "All GET params: %s" % request.args
-        print "All GET Hdrs.: \n%s\n" % request.headers
+        log.debug("GET CallSid: %s" % request.args.get("CallSid"))
+        log.debug("All GET Values: %s" % request.values)
+        log.debug("All GET params: %s" % request.args)
+        log.debug("All GET Hdrs.: \n%s\n" % request.headers)
 
 
 def shutdown_server():
@@ -122,9 +142,9 @@ def respond_with_twiml(twiml):
 @app.route('/scu', methods=['POST'])
 def handle_scu():
     if request.form.get('CallStatus') is not None:
-        print "adding to DB"
+        log.debug( "Adding Call record to DB")
         duration = int(request.form.get('CallDuration')) if request.form.get('CallDuration') is not None else 0
-        print duration
+        log.debug( "Call duration: %d" % duration )
         g.db.execute('insert into calls \
                      (FromNo, \
                      ToNo, \
@@ -146,7 +166,7 @@ def handle_scu():
                      request.form.get('CallStatus'), \
                      duration])
         g.db.commit()
-        print 'New call status record was successfully added to db'
+        log.debug('New call status record was successfully added to db')
     return "", 204
 
 
@@ -154,8 +174,9 @@ def handle_scu():
 def show_calls():
     cur = g.db.execute('select * from calls order by id desc')
     calls = dict_from_row(cur)
+    log.debug("Calls in DB:\n")
     for c in calls:
-        print c
+        log.debug(c)
     return jsonify({ 'calls' : calls })
 
 

@@ -5,13 +5,14 @@ import ConfigParser
 import logging
 from sys import exit
 import os
+from helpers import setup_console_logger
 
 
 class TwilioHandler:
     """A simple class to make a call from a twilio number"""
 
     def __init__(self, logger=None):
-        self.__log = logger if logger is not None else logging.getLogger('TwilioConnector')
+        self.__log = setup_console_logger(logger, "TwilioHandler")
         self.__log.debug("TwilioHandler initialized")
         self.cfg = {}
 
@@ -97,7 +98,7 @@ if '__main__' == __name__:
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
     # create formatter and add it to the handlers
-    formatter=logging.Formatter('[%(asctime)s] [%(levelname)s]: %(message)s', "%a %Y-%m-%d %H:%M:%S %z")
+    formatter=logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s]: %(message)s', "%a %Y-%m-%d %H:%M:%S %z")
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
