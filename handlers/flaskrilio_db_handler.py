@@ -46,7 +46,7 @@ class FlaskrilioDBHandler:
                    str(to_no).replace("+", ""))
         self.__log.debug("Querying DB with: '%s'" % query)
         outbound_call_cur = self.__db.execute(query)
-        res = self.dict_from_row(outbound_call_cur)[0]
+        res = self.dict_from_row(outbound_call_cur)
         if res is not None:
             return res[0]
         else:
