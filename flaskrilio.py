@@ -18,10 +18,10 @@ import logging
 
 
 # Flask app Configuration
-DATABASE = 'twilio.db'
+DATABASE = 'flaskrilio.db'
 DEBUG = True
 
-app = Flask(__name__)
+app = Flask("Flaskrilio")
 app.config.from_object(__name__)
 
 # get logger
@@ -51,6 +51,7 @@ def init_db():
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql') as f:
             db.cursor().executescript(f.read())
+            log.debug("Successfully initialized DB with empty calls table!")
         db.commit()
 
 
@@ -65,14 +66,14 @@ def get_twiml(twiml):
     """Will safely check if requested twiml file exists!"""
     try:
         with open("twimls/%s" % twiml):
-            log.debug("responding with %s" % twiml)
+            log.debug("get_twiml(): responding with %s\n\n" % twiml)
             return send_from_directory('twimls', filename=twiml)
     except IOError:
         return render_template('404.xml'), 404
 
 
 def print_request_details(request):
-    log.debug("All REQ Cookies: %s" % request.cookies)
+    log.debug("\n\nAll REQ Cookies: %s" % request.cookies)
     if request.method in ['POST', 'PUT']:
         log.debug("All POST Values: %s" % request.values)
         log.debug("All POST Form: %s" % request.form)
@@ -142,9 +143,11 @@ def respond_with_twiml(twiml):
 @app.route('/scu', methods=['POST'])
 def handle_scu():
     if request.form.get('CallStatus') is not None:
-        log.debug( "Adding Call record to DB")
         duration = int(request.form.get('CallDuration')) if request.form.get('CallDuration') is not None else 0
-        log.debug( "Call duration: %d" % duration )
+        log.debug("Adding '%d's '%s' call identified with callSid:'%s' to DB" \
+                  % (duration,
+                     request.form.get('Direction'),
+                     request.form.get('CallSid')))
         g.db.execute('insert into calls \
                      (FromNo, \
                      ToNo, \
@@ -166,7 +169,7 @@ def handle_scu():
                      request.form.get('CallStatus'), \
                      duration])
         g.db.commit()
-        log.debug('New call status record was successfully added to db')
+        log.debug("callSid:'%s' successfully added to db" % request.form.get('CallSid'))
     return "", 204
 
 
@@ -188,7 +191,11 @@ if __name__ == '__main__':
             init_db()
             print "My public IP address is: %s" % ip
             app.run(host='0.0.0.0', port=80)
+        if os.environ['ENV'] == 'NGROK':
+            init_db()
+            print "My public IP address is: %s" % ip
+            app.run(host='127.0.0.1', port=5000)
+
     else:
         init_db()
         app.run(debug=True)
-

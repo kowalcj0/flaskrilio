@@ -9,5 +9,7 @@ CREATE TABLE calls (
   CallSid string not null,
   Direction string not null,
   CallStatus string not null,
-  CallDuration integer not null
+  CallDuration integer not null,
+  StartTime string null,
+  EndTime string null
 );

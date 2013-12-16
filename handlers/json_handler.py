@@ -4,6 +4,8 @@
 import json
 import urllib2
 import logging
+from helpers import setup_console_logger
+
 
 class JsonHandler:
     """A simple wrapper for urllib2 and json
@@ -18,7 +20,7 @@ class JsonHandler:
                             by providing a 'hostname' param
         """
         self.__hostname = hostname if hostname is not None else "http://127.0.0.0:5000"
-        self.__log = logger if logger is not None else logging.getLogger('twilio-ec2.JsonHandler')
+        self.__log = setup_console_logger(logger, "JsonHandler")
         self.__log.debug("Json handler initialized for: %s" % self.__hostname)
 
 
@@ -28,13 +30,30 @@ class JsonHandler:
             hostname = self.__hostname
         if endpoint is None:
             endpoint = "/"
-        req = urllib2.Request(url='%s%s' % (hostname, endpoint))
+        url = '%s%s' % (hostname, endpoint)
+        req = urllib2.Request(url=url)
         req.add_header("Content-Type", "application/json")
         req.add_header("Accept", "application/json")
+        response = None
         try:
-            return json.load(urllib2.urlopen(req))
-        except IOError as e:
-            self.__log.error(e)
+            self.__log.debug("GET %s" % url)
+            response = urllib2.urlopen(req)
+            if response is not None:
+                return json.load(response)
+            else:
+                return response
+        except urllib2.HTTPError as e:
+            self.__log.debug("'%s' URL:%s" % (e, url))
+            return e.code, None
+        except urllib2.URLError as e:
+            self.__log.debug("URLError : %s with reason: %s" % (e, e.code))
+            return e.reason, None
+        except urllib2.IOError as e:
+            self.__log.debug("IOError: %s" % e)
+            return e.reason, None
+        except Exception as e:
+            self.__log.debug("Excpeption: %s" % e)
+            return e.reason, None
 
 
     def post(self, hostname=None, endpoint=None, data=None):
@@ -46,13 +65,15 @@ class JsonHandler:
             hostname = self.__hostname
         if endpoint is None:
             endpoint = "/"
+        url = '%s%s' % (hostname, endpoint)
         if data:
-            req = urllib2.Request(url='%s%s' % (hostname, endpoint), data=data)
+            req = urllib2.Request(url=url, data=data)
         else:
-            req = urllib2.Request(url='%s%s' % (hostname, endpoint))
+            req = urllib2.Request(url=url)
         req.add_header("Content-Type", "application/json")
         req.add_header("Accept", "application/json")
         try:
+            self.__log.debug("POST %s" % url)
             return json.load(urllib2.urlopen(req))
         except IOError as e:
             self.__log.error(e)

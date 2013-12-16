@@ -9,6 +9,7 @@ import sqlite3
 from handlers.flaskrilio_handler import FlaskrilioHandler
 from handlers.call_connect_handler import CallConnectHandler
 from handlers.twilio_handler import TwilioHandler
+from handlers.flaskrilio_db_handler import FlaskrilioDBHandler
 
 
 
@@ -69,11 +70,48 @@ def before_all(context):
     #logging.basicConfig(level=logging.DEBUG)
 
     # get a connection to local sqlite3 twilio.db managed by flaskrilio script
-    context.db = connect_db()
-    # get a Flaskrilio Handler used to make HTTP requests to this service
-    context.fh = FlaskrilioHandler(hostname="http://127.0.0.1:5000", logger=context.log)
-    context.cch = CallConnectHandler(hostname="http://callconnect.poc.hibulabs.co.uk", logger=context.log)
+    context.db = FlaskrilioDBHandler(db_conn=connect_db(), logger=context.log)
+
+    ##########################################################################
+    # configure FlaskrilioHandler
+    if os.environ.get('MODE') is not None:
+        if os.environ['MODE'] == 'EC2':
+            from helpers import get_public_ip
+            context.flaskip = get_public_ip()
+            context.flaskport = 80
+            context.flaskhost = "http://%s:%d" % (context.flaskip,
+                                                  context.flaskport)
+            context.publicHost = "http://%s:%d" % (context.flaskip,
+                                                  context.flaskport)
+    else:
+        context.flaskip = "127.0.0.1"
+        context.flaskport = 5000
+        context.flaskhost = "http://%s:%d" % (context.flaskip,
+                                              context.flaskport)
+        # Provide a publicly available host serving Twimls when running locally
+        context.publichost = "http://7f529480.ngrok.com"
+    context.fh = FlaskrilioHandler(hostname="%s" % (context.flaskhost),
+                                   logger=context.log)
+    ##########################################################################
+
+    ##########################################################################
+    # configure CallConnectHandler
+    if os.environ.get('ENV') is not None:
+        if os.environ['ENV'] == 'POC':
+            cchost = "http://callconnect.poc.hibulabs.co.uk"
+        elif os.environ['ENV'] == 'DEV':
+            cchost = "http://callconnect.dev.hibulabs.co.uk"
+    else:
+        cchost = "http://callconnect.dev.hibulabs.co.uk"
+    context.cch = CallConnectHandler(hostname=cchost, logger=context.log)
+    ##########################################################################
+
+    ##########################################################################
+    # configure TwilioHandler
     context.th = TwilioHandler(logger=context.log)
+    context.th.load_config(twilio_config="twilio.cfg")
+    context.th.connect_to_twilio()
+    ##########################################################################
 
 
 def after_step(context, step):

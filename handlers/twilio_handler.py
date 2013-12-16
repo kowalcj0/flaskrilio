@@ -26,8 +26,6 @@ class TwilioHandler:
             self.cfg['twilio_api_ver'] = cp.get('twilio_api', 'twilio_api_ver')
             self.cfg['account_sid'] = cp.get('twilio_api', 'account_sid')
             self.cfg['auth_token'] = cp.get('twilio_api', 'auth_token')
-            self.cfg['callback_ip_address'] = cp.get('twilio_api',
-                                                     'callback_ip_address')
 
 
     def connect_to_twilio(self):
@@ -40,7 +38,7 @@ class TwilioHandler:
             print e
 
 
-    def make_a_call(self, from_no, to_no):
+    def call(self, from_no, to_no):
         try:
             call = self.client.calls.create(to = to_no,
                                            from_= from_no,
@@ -52,11 +50,32 @@ class TwilioHandler:
             print e
 
 
-    def get_call_details(self, call):
+    def call_with_twiml(self, from_no, to_no, twiml_url, scu_url=None, scu_method=None):
         try:
-            return self.client.calls.get(call.sid)
+            if scu_url is not None:
+                scu_method = 'POST' if scu_method is None else scu_method
+                call = self.client.calls.create(to = to_no,
+                                            from_= from_no,
+                                            url = twiml_url,
+                                            status_callback = scu_url,
+                                            status_method = scu_method)
+            else:
+                call = self.client.calls.create(to = to_no,
+                                            from_= from_no,
+                                            url = twiml_url)
+            self.__log.info("Call from %s to %s successfully created - call_sid %s" % (from_no, to_no, call.sid))
+            return call
         except twilio.TwilioRestException as e:
-            self.__log.error("Something went wrong when trying to get call details for call_sid=%s" % call.sid)
+            self.__log.error("Something went wrong when trying to establish a call...")
+            print e
+
+
+
+    def get_call_details(self, callSid):
+        try:
+            return self.client.calls.get(callSid)
+        except twilio.TwilioRestException as e:
+            self.__log.error("Something went wrong when trying to get call details for call_sid=%s" % callSid)
             print e
 
 
@@ -121,4 +140,4 @@ if '__main__' == __name__:
     caller.load_config(twilio_config=opts.config)
     caller.connect_to_twilio()
     caller.print_config()
-    caller.make_a_call(from_no="+441353210177", to_no="+447402028595")
+    caller.call(from_no="+441353210177", to_no="+447402028595")

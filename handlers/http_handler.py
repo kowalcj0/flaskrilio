@@ -79,11 +79,23 @@ class HttpHandler:
             endpoint = "/"
         url = '%s%s' % (hostname, endpoint)
         req = RequestWithMethod(url=url, method='DELETE')
+        response = None
         try:
-            self.__log.info("Deleting resource: %s" % url)
-            return urllib2.urlopen(req).getcode()
-        except IOError as e:
-            self.__log.error(e)
+            self.__log.debug("Deleting resource: %s" % url)
+            response = urllib2.urlopen(req)
+        except urllib2.HTTPError as e:
+            self.__log.debug("'%s' URL:%s" % (e, url))
+            return e.code, None
+        except urllib2.URLError as e:
+            self.__log.debug("URLError : %s with reason: %s" % (e, e.code))
+            return e.reason, None
+        except urllib2.IOError as e:
+            self.__log.debug("IOError: %s" % e)
+            return e.reason, None
+        except Exception as e:
+            self.__log.debug("Excpeption: %s" % e)
+            return e.reason, None
+        return response.code, response
 
 
 

@@ -11,7 +11,7 @@ def step_impl(context):
 
 @when(u'I fetch call records')
 def step_impl(context):
-    context.calls = context.fh.get_calls()['calls']
+    context.calls = context.fh.get_calls()
 
 
 @then(u'I should retrieve call records')
