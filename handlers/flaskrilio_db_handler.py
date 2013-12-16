@@ -47,8 +47,9 @@ class FlaskrilioDBHandler:
         self.__log.debug("Querying DB with: '%s'" % query)
         outbound_call_cur = self.__db.execute(query)
         res = self.dict_from_row(outbound_call_cur)
+        self.__log.debug("Results: %s" % res)
         if res is not None:
-            return res[0]
+            return res
         else:
             return []
 
@@ -68,8 +69,9 @@ class FlaskrilioDBHandler:
         self.__log.debug("Querying DB with: '%s'" % query)
         inbound_call_cur = self.__db.execute(query)
         res = self.dict_from_row(inbound_call_cur)
+        self.__log.debug("Results: %s" % res)
         if res is not None:
-            return res[0]
+            return res
         else:
             return []
 
