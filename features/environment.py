@@ -53,7 +53,8 @@ def before_all(context):
     # get logger
     context.log = logging.getLogger('twilio-ec2.Behave')
     # create file handler which logs even debug messages
-    fh = logging.FileHandler('behave.log')
+    # overwrite the old log file
+    fh = logging.FileHandler(filename='reports/behave.log', mode='w')
     # create console handler with a higher log level
     context.log.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()

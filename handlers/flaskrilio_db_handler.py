@@ -49,7 +49,8 @@ class FlaskrilioDBHandler:
         res = self.dict_from_row(outbound_call_cur)
         self.__log.debug("Results: %s" % res)
         if res is not None:
-            return res
+            # return first element from the result set, as there's only one
+            return res[0]
         else:
             return []
 
@@ -71,7 +72,8 @@ class FlaskrilioDBHandler:
         res = self.dict_from_row(inbound_call_cur)
         self.__log.debug("Results: %s" % res)
         if res is not None:
-            return res
+            # return first element from the result set, as there's only one
+            return res[0]
         else:
             return []
 

@@ -33,6 +33,7 @@ Feature: Call Connect Handler
     Scenario Outline: Delete my Caller ID after retrieving new number to call
         Given I'm a new user
         When I ask for a new number to call for a "<redirect_to_no>"
+        And this number is different from number "<redirect_to_no>"
         Then I should retrieve a new number to call
         When I delete my Caller ID
         Then my Caller ID should be deleted

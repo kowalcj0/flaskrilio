@@ -27,7 +27,7 @@ app.config.from_object(__name__)
 # get logger
 log = logging.getLogger('Flaskrilio')
 # create file handler which logs even debug messages
-fh = logging.FileHandler('flaskrilio.log')
+fh = logging.FileHandler('reports/flaskrilio.log')
 # create console handler with a higher log level
 log.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()

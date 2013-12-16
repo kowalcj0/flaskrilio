@@ -44,6 +44,14 @@ def step_impl(context, number):
     context.number_to_call = context.redir_resp['numberToCall']
 
 
+@when('this number is different from number "{number}"')
+def step_impl(context, number):
+    assert context.number_to_call != number, \
+      "Number pool is full! Because the numberToCall:'%s' is the same as " \
+      "our outbound number:'%s' !" \
+      % (context.number_to_call, number)
+
+
 @When("I delete my Caller ID")
 def step_impl(context):
     code,resp = context.cch.delete_caller_id(context.caller_id)

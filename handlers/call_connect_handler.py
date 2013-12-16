@@ -31,6 +31,7 @@ class CallConnectHandler:
         # use json.dumps to convert payload tupple into a string
         redir = self.__jh.post(endpoint="/api/callers",
                                data=json.dumps(payload))
+        self.__log.debug("POST %s/api/callers payload: %s" % (self.__hostname, payload))
         self.__log.debug("Received new redirect_to: %s" % redir)
         return redir
 
