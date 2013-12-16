@@ -89,7 +89,10 @@ def before_all(context):
         context.flaskhost = "http://%s:%d" % (context.flaskip,
                                               context.flaskport)
         # Provide a publicly available host serving Twimls when running locally
-        context.publichost = "http://7f529480.ngrok.com"
+        if os.environ.get('NGROK') is not None:
+            context.publichost = os.environ.get('NGROK')
+        else:
+            context.publichost = "http://54.247.15.37"
     context.fh = FlaskrilioHandler(hostname="%s" % (context.flaskhost),
                                    logger=context.log)
     ##########################################################################

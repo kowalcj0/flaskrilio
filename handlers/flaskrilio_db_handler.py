@@ -46,7 +46,11 @@ class FlaskrilioDBHandler:
                    str(to_no).replace("+", ""))
         self.__log.debug("Querying DB with: '%s'" % query)
         outbound_call_cur = self.__db.execute(query)
-        return self.dict_from_row(outbound_call_cur)[0]
+        res = self.dict_from_row(outbound_call_cur)[0]
+        if res is not None:
+            return res[0]
+        else:
+            return []
 
 
     def get_last_inbound_call(self, from_no, to_no):
@@ -63,7 +67,11 @@ class FlaskrilioDBHandler:
                    str(to_no).replace("+", ""))
         self.__log.debug("Querying DB with: '%s'" % query)
         inbound_call_cur = self.__db.execute(query)
-        return self.dict_from_row(inbound_call_cur)[0]
+        res = self.dict_from_row(inbound_call_cur)
+        if res is not None:
+            return res[0]
+        else:
+            return []
 
 
     def add_times_to_call(self, callSid, start_time, end_time):

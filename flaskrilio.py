@@ -51,8 +51,8 @@ def init_db():
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql') as f:
             db.cursor().executescript(f.read())
-            log.debug("Successfully initialized DB with empty calls table!")
         db.commit()
+        log.debug("Successfully initialized DB with empty calls table!")
 
 
 def dict_from_row(cur):
@@ -191,11 +191,6 @@ if __name__ == '__main__':
             init_db()
             print "My public IP address is: %s" % ip
             app.run(host='0.0.0.0', port=80)
-        if os.environ['ENV'] == 'NGROK':
-            init_db()
-            print "My public IP address is: %s" % ip
-            app.run(host='127.0.0.1', port=5000)
-
     else:
         init_db()
         app.run(debug=True)
