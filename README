@@ -1,0 +1,35 @@
+# Flaskrilio
+-----------------------------
+
+Flaskrilio is a tool used to test telephony applications build using Twilio API
+
+
+Flaskrilio - is a simple Flask based HTTP server that handles Twilio's requests
+Behave part - BDD test executed using Behave
+
+
+## Prerequisities
+twilio.cfg file
+check requirements.pip
+pip
+virtualenv
+
+## Installation
+virntualenv ~....
+source ~...
+pip install -r requirements.pip
+
+
+## Starting Flaskrilio server
+./flaskrilio
+or
+python flaskrilio.py
+
+
+## Running tests
+behave
+behave -v
+behave --junit
+behave -v -n "name of selected scenario"
+NGROK="http://3070dd9.ngrok.com" behave -v
+NGROK="http://3070dd9.ngrok.com" ENV=POC behave -v --junit

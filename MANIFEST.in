@@ -1,3 +1,6 @@
-recursive-include yourapplication/features *
-recursive-include yourapplication/templates *
-recursive-include yourapplication/twimls *
+recursive-include Flaskrilio/features *.feature environment.py !.ropeproject
+recursive-include Flaskrilio/features/steps *.py
+recursive-include Flaskrilio/templates *.xml
+recursive-include Flaskrilio/twimls *.xml
+recursive-include Flaskrilio *.py *.sh *.txt .behaverc schema.sql requirements.pip README
+prune Flaskrilio/features/.ropeproject

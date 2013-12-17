@@ -17,6 +17,9 @@ from fabric.api import *
 # *- download flaskrilio db
 # *- download all the logs (flaskrilio, behave, plain output)
 
+def pack():
+    # create a new source distribution as tarball
+    local('python setup.py sdist --formats=gztar', capture=False)
 
 def spawn_ec2_instaces():
     pass
