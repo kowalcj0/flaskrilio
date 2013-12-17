@@ -8,3 +8,5 @@ tmp
 *.cfg
 *.db
 reports
+build
+dist

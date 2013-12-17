@@ -1,0 +1,3 @@
+recursive-include yourapplication/features *
+recursive-include yourapplication/templates *
+recursive-include yourapplication/twimls *

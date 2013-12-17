@@ -21,8 +21,17 @@ Feature: CallConnect and Twilio handlers
         | +442033224597 | +441353210177 |
 
 
+    @skip
     Scenario: Call CallConnect number to call from a withheld number
 
+
+    @skip
     Scenario: Call CallConnect number from a number different from the one we used to get the redirection for
 
+
+    @skip
     Scenario: Call CallConnect number pointing at a busy number
+
+
+    @skip
+    Scenario: Call CallConnect number from an internation number
