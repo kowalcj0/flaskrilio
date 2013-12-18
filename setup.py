@@ -40,8 +40,8 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Flask>=0.10',
-        'behave>=1.2.3',
+        'Flask==0.10',
+        'behave==1.2.3',
         'httplib2==0.8',
         'twilio==3.6.4',
         'python-dateutil==2.2'
