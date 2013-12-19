@@ -5,7 +5,7 @@ import ConfigParser
 import logging
 from sys import exit
 import os
-from helpers import setup_console_logger
+from helpers.common import setup_console_logger
 
 
 class TwilioHandler:
@@ -92,6 +92,45 @@ class TwilioHandler:
         # more on this here
         #https://twilio-python.readthedocs.org/en/latest/api/rest/resources.html#twilio.rest.resources.PhoneNumber
         pass
+
+
+    def get_all_incoming_twilio_numbers(self):
+        phoneNumbers = self.client.phone_numbers.list()
+        self.__log.debug("List of all available incoming Twilio numbers:")
+        for n in phoneNumbers:
+            self.__log.debug("Number:%s - sid:%s - Object dict: %s" % (n.phone_number, n.sid, n.__dict__))
+        return phoneNumbers
+
+
+    def get_number_sid_for_phone(self, number):
+        all_numbers = self.get_all_incoming_twilio_numbers()
+        for n in all_numbers:
+            if n.phone_number == number:
+                self.__log.debug(
+                    "Found '%s' in the list of all numbers. " \
+                    "Its sid is: %s" % (number, n.sid))
+                return n.sid
+        return None
+
+
+    def get_number_details(self, number=None, number_sid=None):
+        if number_sid is None:
+            number_sid = self.get_number_sid_for_phone(number)
+        number_details = self.client.phone_numbers.get(number_sid)
+        self.__log.debug("%s details: %s" % (number_details.phone_number,
+                                             number_details.__dict__))
+        return number_details
+
+
+    def update_number_scu_url(self,
+                              number_sid=None,
+                              callback=None,
+                              callback_method=None):
+        callback_method = 'POST' if callback_method is None else callback_method
+        self.client.phone_numbers.get(number_sid).update(
+            status_callback=callback,
+            status_callback_method=callback_method
+        )
 
 
 if '__main__' == __name__:

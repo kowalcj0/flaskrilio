@@ -95,3 +95,51 @@ def step_impl(context, seconds):
     delta = (in_start - out_start).seconds
     assert delta <= seconds, \
             "Time delta between the call legs is greater than: %d" % seconds
+
+
+
+@when("I get all incoming Twilio numbers")
+def step_impl(context):
+    context.all_incoming_numbers = context.th.get_all_incoming_twilio_numbers()
+
+
+@Then('I should be able to find "{number}" on this list')
+def step_impl(context, number):
+    found = False
+    for n in context.all_incoming_numbers:
+        if n.phone_number == number:
+            found = True
+    assert found == True, "Couldn't find number:%s on the list of all numbers!!!" % number
+
+
+@then('I should be able to get number_sid for "{number}"')
+def step_impl(context, number):
+    context.number_sid = context.th.get_number_sid_for_phone(number)
+    assert context.number_sid is not None, "Couldn't find number: %s " \
+            "on the list of all incoming numbers!!!" % number
+
+
+@when('I update the callback url to:"{scu_url}" for "{number}"')
+def step_impl(context, scu_url, number):
+    if not hasattr(context, 'number_sid'):
+        context.number_sid = context.th.get_number_sid_for_phone(number)
+    context.scu_url = scu_url
+    context.th.update_number_scu_url(
+        number_sid=context.number_sid,
+        callback=context.scu_url)
+
+
+@When('I update the callback url to current public host for "{number}"')
+def step_impl(context, number):
+    if not hasattr(context, 'number_sid'):
+        context.number_sid = context.th.get_number_sid_for_phone(number)
+    context.scu_url = "%s/scu" % context.publichost
+    context.th.update_number_scu_url(
+        number_sid=context.number_sid,
+        callback=context.scu_url)
+
+
+@then('the callback url should be correctly updated')
+def step_impl(context):
+    number_details = context.th.get_number_details(number_sid=context.number_sid)
+    assert number_details.status_callback == context.scu_url

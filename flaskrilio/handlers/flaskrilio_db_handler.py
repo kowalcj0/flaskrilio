@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
-from helpers import setup_console_logger
 import sqlite3
-from flaskrilio import connect_db
+from flaskriliosrv import connect_db
+from helpers.common import setup_console_logger
 
 
 class FlaskrilioDBHandler:

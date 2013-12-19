@@ -4,7 +4,7 @@
 import json
 import urllib2
 import logging
-from helpers import setup_console_logger
+from helpers.common import setup_console_logger
 
 
 class JsonHandler:
@@ -78,7 +78,7 @@ class JsonHandler:
         except IOError as e:
             self.__log.error(e)
 
-
+"""
 if '__main__' == __name__:
     _cc = JsonHandler("http://callconnect.poc.hibulabs.co.uk")
     _id = _cc.post(endpoint="/api/id", data="{}")['id']
@@ -101,3 +101,4 @@ if '__main__' == __name__:
     assert _ip["ip"] is not None
     print "My public IP is: %s" % _ip["ip"]
 
+"""

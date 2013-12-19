@@ -4,7 +4,7 @@ import urllib2
 import logging
 from handlers.json_handler import JsonHandler
 from handlers.http_handler import HttpHandler
-from helpers import setup_console_logger
+from helpers.common import setup_console_logger
 
 
 class FlaskrilioHandler:

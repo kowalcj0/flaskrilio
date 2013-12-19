@@ -4,7 +4,7 @@
 import json
 import urllib2
 import logging
-from helpers import setup_console_logger
+from helpers.common import setup_console_logger
 
 class HttpHandler:
     """A simple wrapper for urllib2 and json

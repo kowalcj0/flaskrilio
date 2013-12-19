@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from behave import *
-from flaskrilio import dict_from_row
+from flaskriliosrv import dict_from_row
 
 @given('a Sqlite3 connection')
 def step_impl(context):
