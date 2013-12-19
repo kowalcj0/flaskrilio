@@ -29,7 +29,7 @@ doclines = __doc__.split("\n")
 
 
 setup(
-    name='Flaskrilio',
+    name='flaskrilio',
     version='1.0a',
     maintainer="kowalcj0",
     maintainer_email="kowalcj0@gmail.com",

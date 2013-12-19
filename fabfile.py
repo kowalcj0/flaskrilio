@@ -4,8 +4,8 @@
 __author__ = 'Janusz Kowalczyk'
 
 from fabric.api import *
-from Flaskrilio.helpers.common import *
-from Flaskrilio.helpers.EC2Conn import EC2Conn
+from flaskrilio.helpers.common import *
+from flaskrilio.helpers.EC2Conn import EC2Conn
 from ec2_configuration import CONN_CONFIG, SERVER_TYPES
 
 # tasks:
