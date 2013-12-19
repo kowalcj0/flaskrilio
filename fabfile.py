@@ -77,9 +77,9 @@ def deploy():
         # now setup the package with our virtual environment's
         # python interpreter
         print "\n\n\n"
-        sudo('apt-get install python-setuptools', timeout=60)
+        sudo('apt-get install -qq python-setuptools', timeout=60)
         print "\n\n\n"
-        sudo('/usr/bin/python %s/setup.py install' % DIST)
+        sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
     # now that all is set up, delete the folder again
     #run('rm -rf /tmp/flaskrilio /tmp/flaskrilio.tar.gz')
 
