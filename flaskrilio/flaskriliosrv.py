@@ -27,6 +27,8 @@ app.config.from_object(__name__)
 # get logger
 log = logging.getLogger('Flaskrilio')
 # create file handler which logs even debug messages
+if not os.path.exists('reports'):
+    os.makedirs('reports')
 fh = logging.FileHandler('reports/flaskrilio.log')
 # create console handler with a higher log level
 log.setLevel(logging.DEBUG)
@@ -184,8 +186,8 @@ def show_calls():
 
 
 if __name__ == '__main__':
-    if os.environ.get('ENV') is not None:
-        if os.environ['ENV'] == 'EC2':
+    if os.environ.get('MODE') is not None:
+        if os.environ['MODE'] == 'EC2':
             from helpers import get_public_ip
             ip = get_public_ip()
             init_db()

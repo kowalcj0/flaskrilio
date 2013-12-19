@@ -1,6 +1,8 @@
-recursive-include Flaskrilio/features *.feature environment.py !.ropeproject
-recursive-include Flaskrilio/features/steps *.py
-recursive-include Flaskrilio/templates *.xml
-recursive-include Flaskrilio/twimls *.xml
-recursive-include Flaskrilio *.py *.sh *.txt .behaverc schema.sql requirements.pip README
-prune Flaskrilio/features/.ropeproject
+recursive-include flaskrilio/features *.feature environment.py
+recursive-include flaskrilio/features/steps *.py
+recursive-include flaskrilio/templates *.xml
+recursive-include flaskrilio/twimls *.xml
+recursive-include flaskrilio *.py *.sh *.txt .behaverc schema.sql *.cfg
+include requirements.pip README
+prune flaskrilio/handlers/.ropeproject
+prune flaskrilio/features/.ropeproject

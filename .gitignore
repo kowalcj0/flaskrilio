@@ -11,5 +11,5 @@ tmp
 reports
 build
 dist
-Flaskrilio.egg-info
+flaskrilio.egg-info
 *configuration.py

@@ -6,6 +6,7 @@ import sys
 from multiprocessing import Process
 import tempfile
 import sqlite3
+from helpers.common import get_public_ip
 from handlers.call_connect_handler import CallConnectHandler
 from handlers.flaskrilio_handler import FlaskrilioHandler
 from handlers.twilio_handler import TwilioHandler
@@ -77,12 +78,12 @@ def before_all(context):
     # configure FlaskrilioHandler
     if os.environ.get('MODE') is not None:
         if os.environ['MODE'] == 'EC2':
-            from helpers import get_public_ip
+            from helpers.common import get_public_ip
             context.flaskip = get_public_ip()
             context.flaskport = 80
             context.flaskhost = "http://%s:%d" % (context.flaskip,
                                                   context.flaskport)
-            context.publicHost = "http://%s:%d" % (context.flaskip,
+            context.publichost = "http://%s:%d" % (context.flaskip,
                                                   context.flaskport)
     else:
         context.flaskip = "127.0.0.1"
