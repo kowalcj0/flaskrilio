@@ -33,8 +33,11 @@ def before_step(context, step):
 
 
 def before_scenario(context, scenario):
-    pass
-    #logging.debug("These run before each scenario is run.\n")
+    context.log.info(
+        "\n\n===============================================================\n" \
+        "Starting scenario: '%s'\n" \
+        "================================================================" \
+        % scenario.name)
 
 
 def before_feature(context, feature):
@@ -125,8 +128,11 @@ def after_step(context, step):
 
 
 def after_scenario(context, scenario):
-    pass
-    #logging.debug("These run after each scenario is run.")
+    context.log.info(
+        "\n===============================================================\n" \
+        "Finished scenario: '%s'\n" \
+        "================================================================\n" \
+        % scenario.name)
 
 
 def after_feature(context, feature):

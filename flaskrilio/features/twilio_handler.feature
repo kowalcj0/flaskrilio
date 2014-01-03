@@ -52,7 +52,7 @@ Feature: CallConnect and Twilio handlers
         When I get a number to call for "<to_number>"
         And this number is different from number "<to_number>"
         And I call this number from "<from_number>"
-        And I wait "15" seconds for the call to finish
+        And I wait "20" seconds for the call to finish
         Then I should see CSU records for both call legs in flaskrilio DB
         And both call legs should be in "completed" status
         And I should be able to fetch details for both Twilio call legs

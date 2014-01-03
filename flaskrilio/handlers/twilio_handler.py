@@ -63,6 +63,7 @@ class TwilioHandler:
                 call = self.client.calls.create(to = to_no,
                                             from_= from_no,
                                             url = twiml_url)
+            self.__log.debug("Twilio Call dict: %s " % call.__dict__)
             self.__log.info("Call from %s to %s successfully created - call_sid %s" % (from_no, to_no, call.sid))
             return call
         except twilio.TwilioRestException as e:

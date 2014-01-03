@@ -29,7 +29,7 @@ log = logging.getLogger('Flaskrilio')
 # create file handler which logs even debug messages
 if not os.path.exists('reports'):
     os.makedirs('reports')
-fh = logging.FileHandler('reports/flaskrilio.log')
+fh = logging.FileHandler('reports/flaskrilio.log', mode='w')
 # create console handler with a higher log level
 log.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
@@ -75,18 +75,18 @@ def get_twiml(twiml):
 
 
 def print_request_details(request):
-    log.debug("\n\nAll REQ Cookies: %s" % request.cookies)
+    log.debug("All REQ Cookies: %s" % request.cookies)
     if request.method in ['POST', 'PUT']:
         log.debug("All POST Values: %s" % request.values)
         log.debug("All POST Form: %s" % request.form)
         log.debug("All POST Req. data: %s" % request.data)
         log.debug("All POST params: %s" % request.args)
-        log.debug("All POST Hdrs.: \n%s\n" % request.headers)
+        log.debug("All POST Hdrs.: \n%s" % request.headers)
     if request.method == 'GET':
         log.debug("GET CallSid: %s" % request.args.get("CallSid"))
         log.debug("All GET Values: %s" % request.values)
         log.debug("All GET params: %s" % request.args)
-        log.debug("All GET Hdrs.: \n%s\n" % request.headers)
+        log.debug("All GET Hdrs.: \n%s" % request.headers)
 
 
 def shutdown_server():

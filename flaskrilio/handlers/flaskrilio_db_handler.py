@@ -70,11 +70,13 @@ class FlaskrilioDBHandler:
         self.__log.debug("Querying DB with: '%s'" % query)
         inbound_call_cur = self.__db.execute(query)
         res = self.dict_from_row(inbound_call_cur)
-        self.__log.debug("Results: %s" % res)
-        if res is not None:
+        self.__log.debug("Query results: %s" % res)
+        if len(res) >= 1:
             # return first element from the result set, as there's only one
+            self.__log.debug("Query returned %d results!" % len(res))
             return res[0]
         else:
+            self.__log.debug("Query returned %d results!" % len(res))
             return []
 
 
