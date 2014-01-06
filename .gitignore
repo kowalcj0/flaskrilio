@@ -11,5 +11,6 @@ tmp
 reports
 build
 dist
+.pyenv
 flaskrilio.egg-info
 *configuration.py
