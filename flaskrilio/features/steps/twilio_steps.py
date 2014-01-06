@@ -9,6 +9,60 @@ def step_impl(context):
     assert context.th, "Connection with Twilio is not established!"
 
 
+@given('that we have at least "{number}" incoming Twilio numbers')
+def step_impl(context, number):
+    number = int(number)
+    if not hasattr(context, 'all_incoming_numbers'):
+        context.log.debug("No incoming numbers stored in the test context. "
+                          "Getting all incoming numbers from Twilio...")
+        context.all_incoming_numbers = context.th.get_all_incoming_twilio_numbers()
+    no_of_numbers = len(context.all_incoming_numbers)
+    context.log.debug("Configured Twilio account has '%s' incoming numbers" \
+                      "configured" % no_of_numbers)
+    assert no_of_numbers >= number, \
+            "Configured account has only '%d' incoming numbers " \
+            "where at least '%d' is required!!" % (no_of_numbers, number)
+
+
+@given('we name subsequent available numbers as "{number_names}"')
+def step_impl(context, number_names):
+    context.log.debug(number_names)
+    names = number_names.split()
+    # enumerate get's the list as an enumerate object
+    # http://docs.python.org/2/library/functions.html#enumerate
+    # thanks to this, we can use the index value to access matching number
+    # from the all_incoming_numbers list
+    for index, name in enumerate(names):
+        setattr(context, name, context.all_incoming_numbers[index])
+        context.log.debug("Successfully set '%s' number as context's attribute" % name)
+
+
+
+@When('I update the "{number}"\'s callback url to:"{scu_url}"')
+def step_impl(context, scu_url, number):
+    if not hasattr(context, 'number_sid'):
+        context.number_sid = context.th.get_number_sid_for_phone(number)
+    context.scu_url = scu_url
+    context.th.update_number_scu_url(
+        number_sid=context.number_sid,
+        callback=context.scu_url)
+
+
+@Then('the "{number}"\'s callback url should be updated correctly')
+def step_impl(context):
+    number_details = context.th.get_number_details(number_sid=context.number_sid)
+    assert number_details.status_callback == context.scu_url
+
+
+
+
+
+
+
+
+
+
+
 @when('I call this number from "{number}"')
 @given('I call this number from "{number}"')
 def step_impl(context, number):
@@ -101,7 +155,6 @@ def step_impl(context, seconds):
 @when("I get all incoming Twilio numbers")
 def step_impl(context):
     context.all_incoming_numbers = context.th.get_all_incoming_twilio_numbers()
-
 
 @Then('I should be able to find "{number}" on this list')
 def step_impl(context, number):
