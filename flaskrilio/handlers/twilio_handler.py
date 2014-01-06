@@ -123,15 +123,60 @@ class TwilioHandler:
         return number_details
 
 
+    def update_number_vru_url(self,
+                              number_sid=None,
+                              vru=None,
+                              method=None):
+        method = 'POST' if method is None else method
+        self.client.phone_numbers.get(number_sid).update(
+            voice_url=vru,
+            voice_method=method
+        )
+
+
+    def update_number_vfu_url(self,
+                              number_sid=None,
+                              vfu=None,
+                              method=None):
+        method = 'POST' if method is None else method
+        self.client.phone_numbers.get(number_sid).update(
+            voice_fallback_url=vfu,
+            voice_fallback_method=method
+        )
+
+
     def update_number_scu_url(self,
                               number_sid=None,
-                              callback=None,
-                              callback_method=None):
-        callback_method = 'POST' if callback_method is None else callback_method
+                              scu=None,
+                              method=None):
+        method = 'POST' if method is None else method
         self.client.phone_numbers.get(number_sid).update(
-            status_callback=callback,
-            status_callback_method=callback_method
+            status_callback=scu,
+            status_callback_method=method
         )
+
+
+    def update_number_mru_url(self,
+                              number_sid=None,
+                              mru=None,
+                              method=None):
+        method = 'POST' if method is None else method
+        self.client.phone_numbers.get(number_sid).update(
+            sms_url=mru,
+            sms_method=method
+        )
+
+
+    def update_number_mfu_url(self,
+                              number_sid=None,
+                              mfu=None,
+                              method=None):
+        method = 'POST' if method is None else method
+        self.client.phone_numbers.get(number_sid).update(
+            sms_fallback_url=mfu,
+            sms_fallback_method=method
+        )
+
 
 
 if '__main__' == __name__:

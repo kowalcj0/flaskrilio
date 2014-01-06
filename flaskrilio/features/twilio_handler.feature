@@ -9,13 +9,10 @@ Feature: Twilio handler
         And we name subsequent available numbers as "caller, callee"
 
 
-    @wip
-    Scenario: test
-        When I don't do something
-
+    @twilio
     Scenario Outline: Update Status Callback URL to an example host
-        When I update the "<number>"'s callback url to:"http://example.com"
-        Then the "<number>"'s callback url should be updated correctly
+        When I update the "<number>"'s "status callback" URL to:"http://example.com"
+        Then the "<number>"'s "status callback" URL should be updated correctly
 
         Examples: number names
             | number    |
@@ -24,23 +21,22 @@ Feature: Twilio handler
 
 
     @twilio
-    Scenario Outline: Update Status Callback URL to an example host
-        When I update the callback url to:"http://example.com" for "<number>"
-        Then the callback url should be correctly updated
+    Scenario Outline: Update Status Callback URL to current public host
+        When I update "<number>"'s "status callback" URL to publicly available host
+        Then the "<number>"'s "status callback" URL should be updated correctly
 
-        Examples: twilio numbers
-            | number        |
-            | +441353210177 |
-            | +442033224597 |
+        Examples: number names
+            | number    |
+            | caller    |
+            | callee    |
 
 
     @twilio
-    Scenario Outline: Update Status Callback URL to current public host
-        Given a Twilio connection
-        When I update the callback url to current public host for "<number>"
-        Then the callback url should be correctly updated
+    Scenario Outline: Update Status Voice Request URL to current public host
+        When I update "<number>"'s "voice request" URL to publicly available host
+        Then the "<number>"'s "voice request" URL should be updated correctly
 
-        Examples: twilio numbers
-            | number        |
-            | +441353210177 |
-            | +442033224597 |
+        Examples: number names
+            | number    |
+            | caller    |
+            | callee    |

@@ -28,8 +28,7 @@ from flaskriliosrv import app, connect_db
 # Preconfigure the evnironment using any of these steps :)
 #
 def before_step(context, step):
-    pass
-    #logging.debug("These run before every step.\n")
+    context.log.debug("[STEP]: '%s %s'" % (step.keyword, step.name))
 
 
 def before_scenario(context, scenario):
@@ -98,6 +97,7 @@ def before_all(context):
             context.publichost = os.environ.get('NGROK')
         else:
             context.publichost = "http://54.247.15.37"
+        context.log.debug("PUBLIC HOST set to: %s" % context.publichost)
     context.fh = FlaskrilioHandler(hostname="%s" % (context.flaskhost),
                                    logger=context.log)
     ##########################################################################
