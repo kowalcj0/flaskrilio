@@ -128,11 +128,11 @@ def terminate_ec2_instances():
 def start_flaskrilio():
     global DIST
     cd('/tmp/flaskrilio/%s/flaskrilio' % DIST)
-    run('sudo nohup MODE=EC2 flaskriliosrv.py &')
+    sudo('nohup MODE=EC2 flaskriliosrv.py &')
 
 
 def stop_flaskrilio():
-    run('sudo ps eax | grep [p]ython')
+    sudo('ps eax | grep [p]ython')
 
 
 def download_results():
