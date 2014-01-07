@@ -46,7 +46,7 @@ class JsonHandler:
             self.__log.debug("'%s' URL:%s" % (e, url))
             return e.code, None
         except urllib2.URLError as e:
-            self.__log.debug("URLError : %s with reason: %s" % (e, e.code))
+            self.__log.debug("URLError : %s with reason: %s" % (e, e.__dict__))
             return e.reason, None
         except urllib2.IOError as e:
             self.__log.debug("IOError: %s" % e)

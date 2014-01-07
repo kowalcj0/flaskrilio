@@ -13,9 +13,9 @@ class FlaskrilioHandler:
 
     def __init__(self, hostname=None, logger=None):
         self.__hostname = hostname if hostname is not None else "http://127.0.0.0:5000"
-        self.__log = setup_console_logger(logger, "CallConnectHandler")
-        self.__jh = JsonHandler(self.__hostname)
-        self.__hh = HttpHandler(self.__hostname)
+        self.__log = setup_console_logger(logger, "FlaskrilioHandler")
+        self.__jh = JsonHandler(hostname=self.__hostname, logger=self.__log)
+        self.__hh = HttpHandler(hostname=self.__hostname, logger=self.__log)
         self.__log.debug("Flaskrilio handler initialized for: %s" % self.__hostname)
 
 
