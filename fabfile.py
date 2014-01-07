@@ -90,6 +90,10 @@ def start_ec2_instances():
     global CONN
     global INSTANCES
     #global env
+    print "ENV %s" % (env)
+    print SERVER_TYPES
+    print CONN_CONFIG
+
 
     # pass the CONN_ONFIG as a dict of named parameters
     CONN = EC2Conn(**CONN_CONFIG)
@@ -132,7 +136,9 @@ def start_flaskrilio():
 
 
 def stop_flaskrilio():
+    global DIST
     sudo('ps eax | grep [p]ython')
+    sudo('chown ubuntu /tmp/flaskrilio/%s/flaskrilio/reports/*' % DIST)
 
 
 def download_results():
