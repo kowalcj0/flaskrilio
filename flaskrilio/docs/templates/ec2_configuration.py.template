@@ -24,4 +24,4 @@ SERVER_TYPES = {
                                 'security_groups': [CONN_CONFIG['main_sg']],
                                 'key_name'       : CONN_CONFIG['main_kp']
                                }
-
+}
