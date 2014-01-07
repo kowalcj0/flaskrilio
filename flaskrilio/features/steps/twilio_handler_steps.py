@@ -66,10 +66,42 @@ def step_impl(context, number, url_name, url):
     else:
         assert False, "Unknown URL type: '%s'" % url_name
 
+@given(u'"{number}"\'s "{url_name}" URL is set to "{endpoint}" on a publicly available host')
+@when(u'I update "{number}"\'s "{url_name}" URL to "{endpoint}" on a publicly available host')
+def step_impl(context, number, url_name, endpoint):
+    if url_name == "voice request":
+        context.ctx_url = "%s%s" % (context.publichost, endpoint)
+        context.th.update_number_vru_url(
+            number_sid=getattr(context, number).sid,
+            vru=context.ctx_url)
+    elif url_name == "voice fallback":
+        context.ctx_url = "%s%s" % (context.publichost, endpoint)
+        context.th.update_number_vfu_url(
+            number_sid=getattr(context, number).sid,
+            vfu=context.ctx_url)
+    elif url_name == "status callback":
+        context.ctx_url = "%s%s" % (context.publichost, endpoint)
+        context.th.update_number_scu_url(
+            number_sid=getattr(context, number).sid,
+            scu=context.ctx_url)
+    elif url_name == "messaging request":
+        context.ctx_url = "%s%s" % (context.publichost, endpoint)
+        context.th.update_number_mru_url(
+            number_sid=getattr(context, number).sid,
+            mru=context.ctx_url)
+    elif url_name == "messaging fallback request":
+        context.ctx_url = "%s%s" % (context.publichost, endpoint)
+        context.th.update_number_mfu_url(
+            number_sid=getattr(context, number).sid,
+            mfu=context.ctx_url)
+    else:
+        assert False, "Unknown URL type: '%s'" % url_name
 
 
-@given(u'"{number}"\'s "{url_name}" URL is set to a publicly available host')
-@when(u'I update "{number}"\'s "{url_name}" URL to publicly available host')
+
+
+@given(u'"{number}"\'s "{url_name}" URL is set to a default endpoint on a publicly available host')
+@when(u'I update "{number}"\'s "{url_name}" URL to a default endpoint on a publicly available host')
 def step_impl(context, number, url_name):
     if url_name == "voice request":
         context.ctx_url = "%s/vru" % context.publichost

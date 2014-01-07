@@ -9,9 +9,10 @@ Feature: CallConnect and Twilio handlers
         And a Flaskrilio connection
         And that we have at least "2" incoming Twilio numbers
         And we name subsequent available numbers as "caller, merchant"
-        And "caller"'s "status callback" URL is set to a publicly available host
-        And "merchant"'s "status callback" URL is set to a publicly available host
-        And "merchant"'s "voice request" URL is set to a publicly available host
+        And "caller"'s "status callback" URL is set to a default endpoint on a publicly available host
+        And "caller"'s "voice request" URL is set to "/vru/test-say-something.xml" on a publicly available host
+        And "merchant"'s "status callback" URL is set to a default endpoint on a publicly available host
+        And "merchant"'s "voice request" URL is set to "/vru/test-say-something.xml" on a publicly available host
 
     @wip
     Scenario: Call a Merchant via CallConnect service
