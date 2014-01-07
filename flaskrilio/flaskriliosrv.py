@@ -188,7 +188,7 @@ def show_calls():
 if __name__ == '__main__':
     if os.environ.get('MODE') is not None:
         if os.environ['MODE'] == 'EC2':
-            from helpers import get_public_ip
+            from helpers.common import get_public_ip
             ip = get_public_ip()
             init_db()
             print "My public IP address is: %s" % ip
