@@ -1,0 +1,27 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+""" This is a template EC2 config file that is used by
+    jenkins-pre-test-env-setup.sh script when you run your test on Jenkins.
+    Change it according to your needs, but remember to leave the access_key
+    and secret_key values empty. You will provide them before running the build.
+"""
+
+CONN_CONFIG = {
+               'region'     : 'eu-west-1',
+               'main_sg'    : 'jmeter-ec2-eu',
+               'main_kp'    : 'jmeter-ec2-eu',
+               'access_key' : '',
+               'secret_key' : '',
+               'key_path'   : './ec2.pem',
+               'user_name'  : 'ubuntu'
+                }
+
+
+SERVER_TYPES = {
+                'flaskrilio' : {
+                                'image_id'       : 'ami-8e987ef9',
+                                'instance_type'  : 't1.micro',
+                                'security_groups': [CONN_CONFIG['main_sg']],
+                                'key_name'       : CONN_CONFIG['main_kp']
+                               }
+

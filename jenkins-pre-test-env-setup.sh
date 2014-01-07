@@ -36,10 +36,18 @@ done
 echo "-----END RSA PRIVATE KEY-----" >> $WORKSPACE/ec2.pem
 chmod 400 $WORKSPACE/ec2.pem
 
+# use config template if required file is not available
+if [ ! -e "$WORKSPACE/flaskrilio/twilio.cfg" ]; then
+    cp $WORKSPACE/flaskrilio/docs/templates/twilio.cfg.template $WORKSPACE/flaskrilio/twilio.cfg
+fi
 # set twilio credentials
 sed -i -e "/account_sid=/ s/=.*/=$TWILIO_ACCOUNT_SID/" $WORKSPACE/flaskrilio/twilio.cfg
 sed -i -e "/auth_token=/ s/=.*/=${TWILIO_AUTH_TOKEN}/" $WORKSPACE/flaskrilio/twilio.cfg
 
+# use config template if required file is not available
+if [ ! -e "$WORKSPACE/ec2_configuratio.py" ]; then
+    cp $WORKSPACE/flaskrilio/docs/templates/ec2_configuration.py.template $WORKSPACE/ec2_configuration.py
+fi
 # set EC2 credentials
 sed -i -e "/'access_key' : / s/:.*/: '$EC2_ACCESS_KEY',/" $WORKSPACE/ec2_configuration.py
 sed -i -e "/'secret_key' : / s/:.*/: '$EC2_SECRET_KEY',/" $WORKSPACE/ec2_configuration.py

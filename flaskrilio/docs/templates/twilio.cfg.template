@@ -1,0 +1,8 @@
+# This is a template config file that contains Twilio credentials.
+# It is used by the behave to communicate with Twilio API.
+# Change it according to your needs, but remember to leave the account_sid and
+# auth_token empty. You will provide them before running the build.
+[twilio_api]
+twilio_api_ver=2010-04-01
+account_sid=
+auth_token=
