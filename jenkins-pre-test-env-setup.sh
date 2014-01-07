@@ -29,7 +29,7 @@ find . -name "*.pyc" -exec rm -rf {} \;
 # parse EC2 ssh key passed as string
 # and save it in a pem file
 rm -f $WORKSPACE/ec2.pem
-echo "-----BEGIN RSA PRIVATE KEY-----" >> $WORKSPACE/ec2.pem
+echo "-----BEGIN RSA PRIVATE KEY-----" > $WORKSPACE/ec2.pem
 for i in $(echo $EC2_PEM | tr " " "\n"); do
     echo $i >> $WORKSPACE/ec2.pem
 done
