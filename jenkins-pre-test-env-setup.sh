@@ -45,7 +45,7 @@ sed -i -e "/account_sid=/ s/=.*/=$TWILIO_ACCOUNT_SID/" $WORKSPACE/flaskrilio/twi
 sed -i -e "/auth_token=/ s/=.*/=${TWILIO_AUTH_TOKEN}/" $WORKSPACE/flaskrilio/twilio.cfg
 
 # use config template if required file is not available
-if [ ! -e "$WORKSPACE/ec2_configuratio.py" ]; then
+if [ ! -e "$WORKSPACE/ec2_configuration.py" ]; then
     cp $WORKSPACE/flaskrilio/docs/templates/ec2_configuration.py.template $WORKSPACE/ec2_configuration.py
 fi
 # set EC2 credentials
