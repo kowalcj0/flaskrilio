@@ -22,6 +22,9 @@ behave -v -n "name of selected scenario"
 NGROK="http://3070dd9.ngrok.com" behave -v
 NGROK="http://3070dd9.ngrok.com" ENV=POC behave -v --junit
 
+# Run tests with multiple reporters
+NGROK="http://janusz.ngrok.com" behave --junit -f tags -f tags.location -f steps.usage
+this will generate junit like report files and few more console based reports 
 
 ## running tests locally
 To run your tests locally you will need 2 things:
