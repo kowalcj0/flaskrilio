@@ -67,7 +67,7 @@ class TwilioHandler:
             self.__log.info("Call from %s to %s successfully created - call_sid %s" % (from_no, to_no, call.sid))
             return call
         except twilio.TwilioRestException as e:
-            self.__log.error("Something went wrong when trying to establish a call...")
+            self.__log.error("Something went wrong when trying to establish a call between: '%s' and '%s' and VRU='%s'..." % (from_no, to_no, twiml_url))
             print e
 
 
