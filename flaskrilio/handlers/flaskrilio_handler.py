@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
-import urllib2
 import logging
-from handlers.json_handler import JsonHandler
-from handlers.http_handler import HttpHandler
-from helpers.common import setup_console_logger
+from flaskrilio.handlers.json_handler import JsonHandler
+from flaskrilio.handlers.http_handler import HttpHandler
+from flaskrilio.helpers.common import setup_console_logger
 
 
 class FlaskrilioHandler:
@@ -38,6 +37,7 @@ class FlaskrilioHandler:
 
 
 if '__main__' == __name__:
+    __package__ = "flaskrilio.handlers"
     f = FlaskrilioHandler()
     calls = f.get_calls()
     print calls

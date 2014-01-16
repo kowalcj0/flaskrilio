@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
-import urllib2
 import logging
-from handlers.json_handler import JsonHandler
-from handlers.http_handler import HttpHandler
-from helpers.common import setup_console_logger
+from flaskrilio.handlers.json_handler import JsonHandler
+from flaskrilio.handlers.http_handler import HttpHandler
+from flaskrilio.helpers.common import setup_console_logger
+
 
 class CallConnectHandler:
     """A simple wrapper for Call Connect endpoints"""
@@ -18,7 +18,7 @@ class CallConnectHandler:
 
 
     def get_new_caller_id(self):
-        caller_id =  self.__jh.post(endpoint="/api/id", data="{}")["id"]
+        caller_id =  self.__jh.post(endpoint="/api/id", data="{}").json()['id']
         self.__log.debug("Received new Caller ID: %s" % caller_id)
         return caller_id
 
@@ -32,7 +32,7 @@ class CallConnectHandler:
         redir = self.__jh.post(endpoint="/api/callers",
                                data=json.dumps(payload))
         self.__log.debug("POST %s/api/callers payload: %s" % (self.__hostname, payload))
-        self.__log.debug("Received new redirect_to: %s" % redir)
+        self.__log.debug("Received new redirect_to: %s" % redir.json())
         return redir
 
 
@@ -48,11 +48,12 @@ class CallConnectHandler:
 
     def get_number_pool(self):
         pool = self.__jh.get(endpoint="/api/pool")
-        self.__log.debug("Got Number pool: %s" % pool)
+        self.__log.debug("Got Number pool: %s" % pool.json())
         return pool
 
 
 if '__main__' == __name__:
+    __package__ = "flaskrilio.handlers"
     _cc = CallConnectHandler("http://callconnect.dev.hibulabs.co.uk")
     _id = _cc.get_new_caller_id()
     _redir = _cc.get_redirect_to(_id, "+447402028595")

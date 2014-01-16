@@ -22,7 +22,7 @@ Feature: Twilio handler
 
     @twilio
     Scenario Outline: Update Status Callback URL to current public host
-        When I update "<number>"'s "status callback" URL to publicly available host
+        When I update "<number>"'s "status callback" URL to a default endpoint on a publicly available host
         Then the "<number>"'s "status callback" URL should be updated correctly
 
         Examples: number names
@@ -33,7 +33,7 @@ Feature: Twilio handler
 
     @twilio
     Scenario Outline: Update Status Voice Request URL to current public host
-        When I update "<number>"'s "voice request" URL to publicly available host
+        When I update "<number>"'s "voice request" URL to a default endpoint on a publicly available host
         Then the "<number>"'s "voice request" URL should be updated correctly
 
         Examples: number names

@@ -55,3 +55,29 @@ Feature: Call Connect Handler
         Given a CallConnect service
         When I ask for a Number Pool
         Then I should retrieve a Number Pool with at least '5' numbers in it
+
+    @invalid
+    Scenario Outline: CC service should work only with UK mobile numbers
+        Given I'm a new user
+        When I ask for a new number to call for an invalid '<redirect_to_no>'
+        Then I should get an expected '<err_type>' with '<err_details>'
+
+    Examples: example fake umbers
+        |  redirect_to_no   |   err_type    |  err_details      |
+        | +48507176130      |   resp_code   |   400             |
+        | +442012234243     |   resp_code   |   400             |
+        | +441234567890     |   resp_code   |   400             |
+        | 000000000000      |   resp_code   |   400             |
+        | +000000000000     |   resp_code   |   400             |
+
+
+        #allowed UK numbers
+        #freephones
+        #mobile
+        #landline
+        #
+        #no premium rate 
+    #no immarsta
+    #other crap
+
+    

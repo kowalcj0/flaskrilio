@@ -5,7 +5,7 @@ import ConfigParser
 import logging
 from sys import exit
 import os
-from helpers.common import setup_console_logger
+from flaskrilio.helpers.common import setup_console_logger
 
 
 class TwilioHandler:
@@ -180,6 +180,7 @@ class TwilioHandler:
 
 
 if '__main__' == __name__:
+    __package__ = "flaskrilio.handlers"
     import optparse
 
     # Populate our options, -h/--help is already there for you.

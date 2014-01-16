@@ -17,7 +17,7 @@ def step_impl(context, number_name):
     context.redir_resp = context.cch.get_redirect_to(
         caller_id=number.caller_id,
         number=context.redirect_to_no)
-    context.number_to_call = context.redir_resp['numberToCall']
+    context.number_to_call = context.redir_resp.json()['numberToCall']
 
 
 @when('this number to call is different from "{number_name}"\'s number')

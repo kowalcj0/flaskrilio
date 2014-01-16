@@ -40,3 +40,10 @@ Feature: CallConnect and Twilio handlers
 
     @skip
     Scenario: Call CallConnect number from an internation number
+
+    @skip
+    Scenario: Call from a private number
+
+    @skip
+    Scenario: Call from a strange number: 123456789, 0000000000, MVNO, badly formatted etc
+

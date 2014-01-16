@@ -44,6 +44,7 @@ setup(
         'behave==1.2.3',
         'httplib2==0.8',
         'twilio==3.6.4',
-        'python-dateutil==2.2'
+        'python-dateutil==2.2',
+        'requests==2.1.0'
         ]
 )

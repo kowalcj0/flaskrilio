@@ -4,12 +4,12 @@ import errno
 import json
 import logging
 import copy
-from urllib2 import urlopen
+import requests
 from datetime import datetime
 
 
 def get_public_ip():
-    return json.load(urlopen('http://httpbin.org/ip'))['origin']
+    return requests.get('http://httpbin.org/ip').json()['origin']
 
 
 def get_datetime():
@@ -69,4 +69,5 @@ def setup_file_logger(logger=None, name=None, logfile=None, level=None):
 
 
 if __name__ == '__main__':
+    __package__='flaskrilio.helpers'
     print get_public_ip()

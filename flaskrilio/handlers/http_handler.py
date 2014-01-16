@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Simple urllib2 and json wrapper
+"""Simple wrapper around two libs: requests and json
 """
 import json
-import urllib2
+import requests
 import logging
-from helpers.common import setup_console_logger
+from flaskrilio.helpers.common import setup_console_logger
 
 class HttpHandler:
-    """A simple wrapper for urllib2 and json
+    """A simple wrapper around requests and json
     """
 
     def __init__(self, hostname=None, logger=None):
@@ -28,42 +28,37 @@ class HttpHandler:
         Simple method to send a GET request
 
         Return:
-            http://docs.python.org/2/library/urllib2.html#urllib2.urlopen
+            http://docs.python-requests.org/en/latest/api/#requests.request
         """
         if hostname is None:
             hostname = self.__hostname
         if endpoint is None:
             endpoint = "/"
-        req = urllib2.Request(url='%s%s' % (hostname, endpoint))
-        #req.add_header("Content-Type", "application/json")
-        #req.add_header("Accept", "application/json")
-        try:
-            return urllib2.urlopen(req)
-        except IOError as e:
-            self.__log.error(e)
+        return requests.get(url='%s%s' % (hostname, endpoint))
 
 
-    def post(self, hostname=None, endpoint=None, data=None):
+    def post(self, hostname=None, endpoint=None, data=None, headers=None):
         """
         Simple method to send a POST request with an optional payload
 
         Return:
-            http://docs.python.org/2/library/urllib2.html#urllib2.urlopen
+            http://docs.python-requests.org/en/latest/api/#requests.request
         """
         if hostname is None:
             hostname = self.__hostname
         if endpoint is None:
             endpoint = "/"
+        url='%s%s' % (hostname, endpoint)
         if data:
-            req = urllib2.Request(url='%s%s' % (hostname, endpoint), data=data)
+            if headers:
+                return requests.post(url=url, data=data, headers=headers)
+            else:
+                return requests.post(url=url, data=data)
         else:
-            req = urllib2.Request(url='%s%s' % (hostname, endpoint))
-        #req.add_header("Content-Type", "application/json")
-        #req.add_header("Accept", "application/json")
-        try:
-            return urllib2.urlopen(req)
-        except IOError as e:
-            self.__log.error(e)
+            if headers:
+                return requests.post(url=url, headers=headers)
+            else:
+                return requests.post(url=url)
 
 
     def delete(self, hostname=None, endpoint=None):
@@ -71,74 +66,20 @@ class HttpHandler:
         Simple method to send a DELETE request
 
         Return:
-            http://docs.python.org/2/library/urllib2.html#urllib2.urlopen
+            http://docs.python-requests.org/en/latest/api/#requests.request
         """
         if hostname is None:
             hostname = self.__hostname
         if endpoint is None:
             endpoint = "/"
         url = '%s%s' % (hostname, endpoint)
-        req = RequestWithMethod(url=url, method='DELETE')
-        response = None
-        try:
-            self.__log.debug("Deleting resource: %s" % url)
-            response = urllib2.urlopen(req)
-        except urllib2.HTTPError as e:
-            self.__log.debug("'%s' URL:%s" % (e, url))
-            return e.code, None
-        except urllib2.URLError as e:
-            self.__log.debug("URLError : %s with reason: %s" % (e, e.code))
-            return e.reason, None
-        except urllib2.IOError as e:
-            self.__log.debug("IOError: %s" % e)
-            return e.reason, None
-        except Exception as e:
-            self.__log.debug("Excpeption: %s" % e)
-            return e.reason, None
-        return response.code, response
-
-
-
-class RequestWithMethod(urllib2.Request):
-    """
-    Workaround for using DELETE with urllib2
-    http://abhinandh.com/12/20/2010/making-http-delete-with-urllib2.html
-    """
-    def __init__(self, url, method, data=None, headers={},\
-        origin_req_host=None, unverifiable=False):
-        self._method = method
-        urllib2.Request.__init__(self, url, data, headers,\
-                 origin_req_host, unverifiable)
-
-    def get_method(self):
-        if self._method:
-            return self._method
-        else:
-            return urllib2.Request.get_method(self)
-
+        return requests.delete(url=url)
 
 
 if '__main__' == __name__:
+    __package__ = "flaskrilio.handlers"
     hh = HttpHandler("http://127.0.0.1:5000")
-    home = hh.get(endpoint="/").read(100)
+    home = hh.get(endpoint="/")
     print home
     delete = hh.delete()
-    """
-    payload = {
-                "id": _id,
-                "redirectTo": number
-               }
-    # use json.dumps to convert payload tupple into a string
-    _redir = _cc.post(endpoint="/api/callers",
-                      data=json.dumps(payload))
-
-    assert _id is not None
-    assert _redir is not None
-    print "My CallConnect new callerID is: %s" % _id
-    print "Here's my redir response: %s" % _redir
-
-    _tcc = JsonHandler("http://ip.jsontest.com")
-    _ip = _tcc.get()
-    assert _ip["ip"] is not None
-    print "My public IP is: %s" % _ip["ip"]
-    """
+    print delete

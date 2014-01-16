@@ -27,9 +27,9 @@ def go_to_root_page(context):
 
 @then(u'I should see the message "{message}"')
 def welcome_msg(context, message):
-    assert message in context.homepage['msg'], \
+    assert message in context.homepage.text, \
             "Couldn't find '%s' in the response! Response: %s" \
-            % (message, context.homepage)
+            % (message, context.homepage.text)
 
 
 @when(u'I go to a default "{ctx}"')
@@ -39,4 +39,4 @@ def default_ctx_msg(context, ctx):
 
 @then(u'I should get a default response containing "{text}"')
 def check_if_default_response_contains(context, text):
-    assert text in context.response.read(), "Response doesn't contain: %s" % text
+    assert text in context.response.text, "Response doesn't contain: %s" % text
