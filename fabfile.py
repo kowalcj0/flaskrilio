@@ -118,11 +118,9 @@ def deploy():
         # now setup the package with our virtual environment's
         # python interpreter
         print "\n\n\n"
-        #sudo('apt-get install --yes python-pip', timeout=120)
         sudo('apt-get install --yes python-setuptools', timeout=120)
         print "\n\n\n"
         sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
-        #sudo('pip install -e .')
     # now that all is set up, delete the folder again
     #run('rm -rf /tmp/flaskrilio /tmp/flaskrilio.tar.gz')
 
@@ -138,8 +136,8 @@ def terminate_ec2_instances():
 
 def start_flaskrilio():
     global DIST
-    cd('/tmp/flaskrilio/%s/flaskrilio' % DIST)
-    sudo('nohup MODE=EC2 flaskriliosrv.py &')
+    #cd('/tmp/flaskrilio/%s/flaskrilio' % DIST)
+    sudo('/tmp/flaskrilio/%s/flaskrilio && nohup MODE=EC2 ./flaskriliosrv.py &' % DIST)
 
 
 def stop_flaskrilio():
