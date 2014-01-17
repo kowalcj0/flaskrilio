@@ -111,9 +111,11 @@ def deploy():
     print env.hosts
     print "Sleeping for 30s before proceeding"
     sleep(30)
+    print "Uploading %s.." % DIST
     put('dist/%s.tar.gz' % DIST, '/tmp/flaskrilio.tar.gz')
     # create a place where we can unzip the tarball, then enter
     # that directory and unzip it
+    sudo('rm -fr /tmp/flaskrilio')
     run('mkdir /tmp/flaskrilio')
     with cd('/tmp/flaskrilio'):
         run('tar xzf /tmp/flaskrilio.tar.gz')
@@ -158,12 +160,12 @@ def stop_flaskrilio():
     global DIST
     # ignore if pkill fails
     sudo('pkill -f flaskrilio.py || true')
-    sudo('chown ubuntu /tmp/flaskrilio/%s/flaskrilio/reports/*' % DIST)
 
 
 def download_results():
     global DIST
     # download ./results folder to the current directory
+    sudo('chown ubuntu /tmp/flaskrilio/%s/flaskrilio/reports/*' % DIST)
     get('/tmp/flaskrilio/%s/flaskrilio/reports' % DIST, '%(path)s')
 
 
