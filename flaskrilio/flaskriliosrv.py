@@ -51,12 +51,10 @@ def connect_db():
 
 def init_db():
     with closing(connect_db()) as db:
-        if os.path.isfile('schema.sql'):
-            with app.open_resource('schema.sql') as f:
-                db.cursor().executescript(f.read())
-        else:
-            with app.open_resource('flaskrilio/schema.sql') as f:
-                db.cursor().executescript(f.read())
+        schema_file='%s/schema.sql' % os.path.dirname(os.path.realpath(__file__))
+        log.debug("Loading DB schema from: %s" % schema_file)
+        with app.open_resource(schema_file) as f:
+            db.cursor().executescript(f.read())
         db.commit()
         log.debug("Successfully initialized DB with empty calls table!")
 
