@@ -64,10 +64,9 @@ def start_ec2_instances():
     global INSTANCES
     global CONN_CONFIG
     global SERVER_TYPES
-    #global env
     print "ENV %s" % (env)
-    print SERVER_TYPES
-    print CONN_CONFIG
+    #print SERVER_TYPES
+    #print CONN_CONFIG
 
 
     # pass the CONN_ONFIG as a dict of named parameters
@@ -115,7 +114,7 @@ def deploy():
         # now setup the package with our virtual environment's
         # python interpreter
         print "\n\n\n"
-        sudo('apt-get install python-setuptools', timeout=60)
+        sudo('apt-get install python-setuptools', timeout=120)
         print "\n\n\n"
         sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
         sudo('pip install -e .')
