@@ -119,6 +119,7 @@ def deploy():
         # python interpreter
         print "\n\n\n"
         sudo('apt-get install --yes python-setuptools', timeout=120)
+        sudo('apt-get install --yes python-flask', timeout=120)
         print "\n\n\n"
         sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
     # now that all is set up, delete the folder again
@@ -136,8 +137,9 @@ def terminate_ec2_instances():
 
 def start_flaskrilio():
     global DIST
-    #cd('/tmp/flaskrilio/%s/flaskrilio' % DIST)
-    sudo('/tmp/flaskrilio/%s/flaskrilio && nohup MODE=EC2 ./flaskriliosrv.py &' % DIST)
+    cd('/tmp/flaskrilio/%s/flaskrilio' % DIST)
+    run('pwd')
+    sudo('nohup MODE=EC2 ./flaskriliosrv.py &')
 
 
 def stop_flaskrilio():
