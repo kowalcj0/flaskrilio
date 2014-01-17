@@ -57,7 +57,9 @@ def bring_it_on(ENV=None):
 
 
 def pack():
+    global DIST
     # create a new source distribution as tarball
+    DIST = local('python setup.py --fullname', capture=True).strip()
     local('python setup.py sdist --formats=gztar', capture=False)
 
 
@@ -101,7 +103,7 @@ def start_ec2_instances():
 def deploy():
     global DIST
     # figure out the release name and version
-    DIST = local('python setup.py --fullname', capture=True).strip()
+    #local('python setup.py --fullname', capture=True).strip()
     print DIST
     log.debug("Distribution name:%s " % DIST)
     # upload the source tarball to the temporary folder on the server
@@ -135,15 +137,27 @@ def terminate_ec2_instances():
         i.terminate()
 
 
+def host(name):
+    """
+        Use this to run your tasks on a specified EC2 instance:
+        ie:
+        fab host:ec2-46-51-140-137.eu-west-1.compute.amazonaws.com pack  start_flaskrilio
+    """
+    env.hosts=[name]
+
+
 def start_flaskrilio():
     global DIST
-    #with cd('/tmp/flaskrilio/%s/flaskrilio' % DIST):
-    sudo('MODE=EC2 nohup /tmp/flaskrilio/%s/flaskrilio/flaskriliosrv.py &> /tmp/flaskrilio/%s/flaskrilio/reports/nohup.txt &' % (DIST, DIST), pty=False)
+    p='/tmp/flaskrilio/%s/flaskrilio' % DIST
+    print "Starting flaskrilio from: %s" % p
+    with cd(p):
+        sudo('MODE=EC2 nohup ./flaskriliosrv.py &> reports/nohup.txt &', pty=False)
 
 
 def stop_flaskrilio():
     global DIST
-    sudo('ps eax | grep [p]ython')
+    # ignore if pkill fails
+    sudo('pkill -f flaskrilio.py || true')
     sudo('chown ubuntu /tmp/flaskrilio/%s/flaskrilio/reports/*' % DIST)
 
 
