@@ -56,7 +56,7 @@ Feature: Call Connect Handler
         When I ask for a Number Pool
         Then I should retrieve a Number Pool with at least '5' numbers in it
 
-    @invalid
+    
     Scenario Outline: CC service should work only with UK mobile numbers
         Given I'm a new user
         When I ask for a new number to call for an invalid '<redirect_to_no>'
@@ -65,7 +65,7 @@ Feature: Call Connect Handler
     Examples: example fake umbers
         |  redirect_to_no   |   err_type    |  err_details      |
         | +48507176130      |   resp_code   |   400             |
-        | +442012234243     |   resp_code   |   400             |
+        | +442012234243     |   resp_code   |   201             |
         | +441234567890     |   resp_code   |   400             |
         | 000000000000      |   resp_code   |   400             |
         | +000000000000     |   resp_code   |   400             |
