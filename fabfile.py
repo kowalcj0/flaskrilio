@@ -35,15 +35,19 @@ env.user = CONN_CONFIG['user_name']
 env.key_filename = CONN_CONFIG['key_path']
 
 
-def bring_it_on():
+def bring_it_on(ENV=None):
     """A Fabric task, that configures all the instances and runs all the tests"""
-    # access global variables
+    # use DEV env as default
+    # this can be changes on runtime by providing custom env value
+    # fab bring_it_on:env=poc
+    if ENV is None:
+        ENV='DEV'
     try:
         execute(pack)
         execute(start_ec2_instances)
         execute(deploy)
         execute(start_flaskrilio)
-        execute(test)
+        execute(test,ENV=ENV)
         execute(stop_flaskrilio)
     finally:
         try:
@@ -114,6 +118,7 @@ def deploy():
         # now setup the package with our virtual environment's
         # python interpreter
         print "\n\n\n"
+        sudo('apt-get install python-pip', timeout=120)
         sudo('apt-get install python-setuptools', timeout=120)
         print "\n\n\n"
         sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
@@ -149,6 +154,8 @@ def download_results():
     get('/tmp/flaskrilio/%s/flaskrilio/reports' % DIST, '%(path)s')
 
 
-def test():
+def test(ENV=None):
     global DIST
-    run('cd /tmp/flaskrilio/%s/flaskrilio && MODE=EC2 behave -v --junit --junit-directory "./reports"' % DIST)
+    if ENV is None:
+        ENV='DEV'
+    run('cd /tmp/flaskrilio/%s/flaskrilio && MODE=EC2 ENV=%s behave -v --junit --junit-directory "./reports"' % (DIST, ENV))
