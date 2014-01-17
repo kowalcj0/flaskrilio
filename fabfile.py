@@ -138,7 +138,7 @@ def terminate_ec2_instances():
 def start_flaskrilio():
     global DIST
     with cd('/tmp/flaskrilio/%s/flaskrilio' % DIST):
-        sudo('MODE=EC2 nohup flaskriliosrv.py &> reports/nohup.txt &')
+        sudo('MODE=EC2 nohup /tmp/flaskrilio/%s/flaskrilio/flaskriliosrv.py &> /tmp/flaskrilio/%s/flaskrilio/reports/nohup.txt &')
 
 
 def stop_flaskrilio():
