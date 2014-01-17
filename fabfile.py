@@ -151,7 +151,7 @@ def start_flaskrilio():
     p='/tmp/flaskrilio/%s/flaskrilio' % DIST
     print "Starting flaskrilio from: %s" % p
     with cd(p):
-        sudo('MODE=EC2 nohup ./flaskriliosrv.py &> reports/nohup.txt &', pty=False)
+        sudo('MODE=EC2 nohup ./flaskriliosrv.py &> reports/nohup.txt &')
 
 
 def stop_flaskrilio():
