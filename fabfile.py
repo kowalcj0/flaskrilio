@@ -57,38 +57,13 @@ def pack():
     local('python setup.py sdist --formats=gztar', capture=False)
 
 
-def deploy():
-    global DIST
-    # figure out the release name and version
-    DIST = local('python setup.py --fullname', capture=True).strip()
-    print DIST
-    log.debug("Distribution name:%s " % DIST)
-    # upload the source tarball to the temporary folder on the server
-    print env
-    print env.hosts
-    print "Sleeping for 30s before proceeding"
-    sleep(30)
-    put('dist/%s.tar.gz' % DIST, '/tmp/flaskrilio.tar.gz')
-    # create a place where we can unzip the tarball, then enter
-    # that directory and unzip it
-    run('mkdir /tmp/flaskrilio')
-    with cd('/tmp/flaskrilio'):
-        run('tar xzf /tmp/flaskrilio.tar.gz')
-        # now setup the package with our virtual environment's
-        # python interpreter
-        print "\n\n\n"
-        sudo('apt-get install python-setuptools', timeout=60)
-        print "\n\n\n"
-        sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
-    # now that all is set up, delete the folder again
-    #run('rm -rf /tmp/flaskrilio /tmp/flaskrilio.tar.gz')
-
-
 def start_ec2_instances():
     """Sets up EC2 instances"""
     # access global variables
     global CONN
     global INSTANCES
+    global CONN_CONFIG
+    global SERVER_TYPES
     #global env
     print "ENV %s" % (env)
     print SERVER_TYPES
@@ -118,6 +93,34 @@ def start_ec2_instances():
     env.hosts.append(INSTANCES[0].ip_address)
     print env.hosts
     pass
+
+
+def deploy():
+    global DIST
+    # figure out the release name and version
+    DIST = local('python setup.py --fullname', capture=True).strip()
+    print DIST
+    log.debug("Distribution name:%s " % DIST)
+    # upload the source tarball to the temporary folder on the server
+    print env
+    print env.hosts
+    print "Sleeping for 30s before proceeding"
+    sleep(30)
+    put('dist/%s.tar.gz' % DIST, '/tmp/flaskrilio.tar.gz')
+    # create a place where we can unzip the tarball, then enter
+    # that directory and unzip it
+    run('mkdir /tmp/flaskrilio')
+    with cd('/tmp/flaskrilio'):
+        run('tar xzf /tmp/flaskrilio.tar.gz')
+        # now setup the package with our virtual environment's
+        # python interpreter
+        print "\n\n\n"
+        sudo('apt-get install python-setuptools', timeout=60)
+        print "\n\n\n"
+        sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
+        sudo('pip install -e .')
+    # now that all is set up, delete the folder again
+    #run('rm -rf /tmp/flaskrilio /tmp/flaskrilio.tar.gz')
 
 
 def terminate_ec2_instances():

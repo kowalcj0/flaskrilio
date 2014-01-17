@@ -4,6 +4,7 @@ Created on 24 May 2013
 
 @author: jk
 '''
+import boto
 import boto.ec2
 import time
 
@@ -24,6 +25,7 @@ class EC2Conn:
             self.access_key = access_key
             self.secret_key = secret_key
             self.user_name = user_name
+            print "EC2Conn self: \n%s\n" % self.__dict__
 
 
     """
@@ -31,10 +33,19 @@ class EC2Conn:
     """
     def connect(self):
             #self.conn = EC2Connection(self.access_key, self.secret_key)
+            #if not boto.config.has_section('Credentials'):
+                #print "adding credentials section"
+                #boto.config.add_section('Credentials')
+                #boto.config.set('Credentials', 'aws_access_key_id', self.access_key)
+                #boto.config.set('Credentials', 'aws_secret_access_key', self.secret_key)
             self.conn = boto.ec2.connect_to_region(
                 region_name=self.region,
                 aws_access_key_id=self.access_key,
                 aws_secret_access_key=self.secret_key)
+            #self.conn = boto.ec2.connect_to_region(
+                #region_name=self.region)
+            #print "CONN dict: \n%s\n" % self.conn.__dict__
+            #print "BOTO config dict: \n%s\n" % boto.config.__dict__
 
 
     """
