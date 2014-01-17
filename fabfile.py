@@ -43,6 +43,7 @@ def bring_it_on(ENV=None):
     if ENV is None:
         ENV='DEV'
     try:
+        execute(get_dist)
         execute(pack)
         execute(start_ec2_instances)
         execute(deploy)
@@ -55,11 +56,13 @@ def bring_it_on(ENV=None):
         finally:
             execute(terminate_ec2_instances)
 
+def get_dist():
+    global DIST
+    DIST = local('python setup.py --fullname', capture=True).strip()
+
 
 def pack():
-    global DIST
     # create a new source distribution as tarball
-    DIST = local('python setup.py --fullname', capture=True).strip()
     local('python setup.py sdist --formats=gztar', capture=False)
 
 
@@ -111,11 +114,12 @@ def deploy():
     print env.hosts
     print "Sleeping for 30s before proceeding"
     sleep(30)
+    sudo('rm -fr /tmp/flaskrilio')
+    sudo('rm -fr /tmp/flaskrilio.tar.gz')
     print "Uploading %s.." % DIST
     put('dist/%s.tar.gz' % DIST, '/tmp/flaskrilio.tar.gz')
     # create a place where we can unzip the tarball, then enter
     # that directory and unzip it
-    sudo('rm -fr /tmp/flaskrilio')
     run('mkdir /tmp/flaskrilio')
     with cd('/tmp/flaskrilio'):
         run('tar xzf /tmp/flaskrilio.tar.gz')
@@ -128,6 +132,26 @@ def deploy():
         sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
     # now that all is set up, delete the folder again
     #run('rm -rf /tmp/flaskrilio /tmp/flaskrilio.tar.gz')
+
+
+def deploy_nosetup():
+    global DIST
+    # figure out the release name and version
+    #local('python setup.py --fullname', capture=True).strip()
+    print DIST
+    log.debug("Distribution name:%s " % DIST)
+    # upload the source tarball to the temporary folder on the server
+    print env
+    print env.hosts
+    print "Uploading %s.." % DIST
+    sudo('rm -fr /tmp/flaskrilio')
+    sudo('rm -fr /tmp/flaskrilio.tar.gz')
+    put('dist/%s.tar.gz' % DIST, '/tmp/flaskrilio.tar.gz')
+    # create a place where we can unzip the tarball, then enter
+    # that directory and unzip it
+    run('mkdir /tmp/flaskrilio')
+    with cd('/tmp/flaskrilio'):
+        run('tar xzf /tmp/flaskrilio.tar.gz')
 
 
 def terminate_ec2_instances():
