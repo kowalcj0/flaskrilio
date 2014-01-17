@@ -109,6 +109,8 @@ def before_all(context):
             cchost = "http://callconnect.poc.hibulabs.co.uk"
         elif os.environ['ENV'] == 'DEV':
             cchost = "http://callconnect.dev.hibulabs.co.uk"
+        elif os.environ['ENV'] == 'USPROD':
+            cchost = "http://callconnect.dev.hibulabs.co.uk"
     else:
         cchost = "http://callconnect.dev.hibulabs.co.uk"
     context.cch = CallConnectHandler(hostname=cchost, logger=context.log)
