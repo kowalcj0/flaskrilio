@@ -8,6 +8,7 @@ tmp
 *.cfg
 *.db
 *.pem
+*.out
 build
 dist
 .pyenv
