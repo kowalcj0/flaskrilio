@@ -29,19 +29,19 @@ log = logging.getLogger('Flaskrilio')
 # create file handler which logs even debug messages
 if not os.path.exists('reports'):
     os.makedirs('reports')
-fh = logging.FileHandler('reports/flaskrilio.log', mode='w')
+#fh = logging.FileHandler('reports/flaskrilio.log', mode='w')
 # create console handler with a higher log level
 log.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
-fh.setLevel(logging.DEBUG)
+#fh.setLevel(logging.DEBUG)
 # create formatter and add it to the handlers
 formatter = logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s]: %(message)s',
                                 "%a %Y-%m-%d %H:%M:%S %z")
 ch.setFormatter(formatter)
-fh.setFormatter(formatter)
+#fh.setFormatter(formatter)
 log.addHandler(ch)
-log.addHandler(fh)
+#log.addHandler(fh)
 
 
 

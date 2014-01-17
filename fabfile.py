@@ -58,7 +58,7 @@ def bring_it_on(ENV=None):
 
 def get_dist():
     global DIST
-    DIST = local('python setup.py --fullname', capture=True).strip()
+    DIST=local('python setup.py --fullname', capture=True).strip()
 
 
 def pack():
@@ -143,9 +143,9 @@ def deploy_nosetup():
     # upload the source tarball to the temporary folder on the server
     print env
     print env.hosts
-    print "Uploading %s.." % DIST
     sudo('rm -fr /tmp/flaskrilio')
     sudo('rm -fr /tmp/flaskrilio.tar.gz')
+    print "Uploading %s.." % DIST
     put('dist/%s.tar.gz' % DIST, '/tmp/flaskrilio.tar.gz')
     # create a place where we can unzip the tarball, then enter
     # that directory and unzip it
@@ -179,8 +179,12 @@ def start_flaskrilio():
     with cd(p):
         print p
         run('pwd')
-        sudo('MODE=EC2 nohup bash -c "%s/flaskriliosrv.py &" >& %s/reports/nohup.txt < %s/reports/nohup.txt' % (p,p,p))
+        #sudo('MODE=EC2 nohup bash -c "%s/flaskriliosrv.py &" >& %s/reports/nohup.txt < %s/reports/nohup.txt' % (p,p,p))
+        #sudo('MODE=EC2 nohup bash -c "%s/flaskriliosrv.py &" >& %s/reports/nohup.txt < %s/reports/nohup.txt' % (p,p,p), pty=False)
+        #sudo('MODE=EC2 nohup bash -c "%s/flaskriliosrv.py &" >& %s/reports/nohup.txt < %s/reports/nohup.txt' % (p,p,p), user="ubuntu")
+        #sudo('MODE=EC2 nohup %s/flaskriliosrv.py >& %s/reports/nohup.txt < %s/reports/nohup.txt &' % (p,p,p))
         #sudo('MODE=EC2 nohup ./flaskriliosrv.py &> reports/nohup.txt &', pty=False)
+        sudo('MODE=EC2 screen -d -m ./flaskriliosrv.py', pty=False)
 
 
 def stop_flaskrilio():
