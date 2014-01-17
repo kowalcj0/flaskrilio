@@ -118,8 +118,8 @@ def deploy():
         # now setup the package with our virtual environment's
         # python interpreter
         print "\n\n\n"
-        sudo('apt-get install python-pip', timeout=120)
-        sudo('apt-get install python-setuptools', timeout=120)
+        sudo('apt-get install --yes python-pip', timeout=120)
+        sudo('apt-get install --yes python-setuptools', timeout=120)
         print "\n\n\n"
         sudo('/usr/bin/python %s/setup.py install --quiet' % DIST)
         sudo('pip install -e .')
