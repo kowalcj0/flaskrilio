@@ -4,7 +4,7 @@
 import json
 import logging
 import requests
-from flaskrilio.helpers.common import setup_console_logger
+from helpers.common import setup_console_logger
 
 
 class JsonHandler:
