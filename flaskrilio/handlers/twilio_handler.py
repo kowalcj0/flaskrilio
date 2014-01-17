@@ -5,7 +5,7 @@ import ConfigParser
 import logging
 from sys import exit
 import os
-from flaskrilio.helpers.common import setup_console_logger
+from helpers.common import setup_console_logger
 
 
 class TwilioHandler:

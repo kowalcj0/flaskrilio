@@ -2,7 +2,7 @@
 import logging
 import sqlite3
 from flaskriliosrv import connect_db
-from flaskrilio.helpers.common import setup_console_logger
+from helpers.common import setup_console_logger
 
 
 class FlaskrilioDBHandler:

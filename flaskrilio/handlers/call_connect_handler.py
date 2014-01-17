@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
-from flaskrilio.handlers.json_handler import JsonHandler
-from flaskrilio.handlers.http_handler import HttpHandler
-from flaskrilio.helpers.common import setup_console_logger
+from handlers.json_handler import JsonHandler
+from handlers.http_handler import HttpHandler
+from helpers.common import setup_console_logger
 
 
 class CallConnectHandler:
