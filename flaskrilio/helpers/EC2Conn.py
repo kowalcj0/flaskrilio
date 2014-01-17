@@ -25,7 +25,6 @@ class EC2Conn:
             self.access_key = access_key
             self.secret_key = secret_key
             self.user_name = user_name
-            print "EC2Conn self: \n%s\n" % self.__dict__
 
 
     """
